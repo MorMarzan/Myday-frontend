@@ -1,0 +1,47 @@
+.browser-warning {
+    background: #F6335A;
+    color: $clr1;
+    padding-block: 15px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+
+    .scrolling-text {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        white-space: nowrap;
+        display: flex;
+        animation: moveText 20s linear infinite;
+
+        p {
+            margin-right: 20px;
+            overflow: visible;
+        }
+    }
+}
+
+.browser-warning-modal {
+    width: 80vw;
+    max-height: 90dvh;
+    padding: 20px 30px;
+    position: relative;
+    background-color: $clr0;
+
+    border-radius: 16px;
+    box-shadow: 1px 0px 2px 0px grey;
+    white-space: normal;
+    text-align: center;
+    font-size: rem(25px);
+}
+
+@keyframes moveText {
+    0% {
+        transform: translateX(0) translateY(-50%);
+    }
+
+    100% {
+        transform: translateX(-50%) translateY(-50%);
+    }
+}

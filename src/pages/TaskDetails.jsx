@@ -15,22 +15,13 @@ export function TaskDetails() {
     const [activities, setActivities] = useState(null)
     const [currSubject, setCurrSubject] = useState('Updates')
 
-    // console.log('board', board)
 
     useEffect(() => {
         const task = getTaskById()
         _loadTaskActivities(boardId, task.id)
-        // _getTaskById()
     }, [boardId, taskId, currSubject, board])
 
-    // async function _getTaskById() {
-    //     try {
-    //         const task = await getTask(boardId, taskId)
-    //         setCurrTask(task)
-    //     } catch (err) {
-    //         console.error("Error getting task:", err)
-    //     }
-    // }
+
     async function _loadTaskActivities(boardId, taskId) {
         try {
             const boardActivities = await loadBoardActivities({ boardId, taskId })
@@ -58,8 +49,8 @@ export function TaskDetails() {
         updateTask(boardId, groupId, updatedTask)
     }
 
-    function onAddFile(file) {
-        const updatedTask = { ...currTask, file: file.url }
+    function onAddFile(fileUrl) {
+        const updatedTask = { ...currTask, file: fileUrl }
         setCurrTask(updatedTask)
         const groupId = boardService.findGroupIdByTaskId(taskId)
         updateTask(boardId, groupId, updatedTask)

@@ -5,7 +5,7 @@ import { useSession } from '@supabase/auth-helpers-react'
 import emailjs from '@emailjs/browser'
 
 import { getMembersFromBoard, removeTask, updateTask } from "../../../../store/actions/board.actions"
-import { resetDynamicModal, setDynamicModal, setDynamicModalData, setSidePanelOpen, showErrorMsg, showSuccessMsg } from "../../../../store/actions/system.actions"
+import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal, setDynamicModal, setDynamicModalData, setSidePanelOpen, showErrorMsg, showSuccessMsg } from "../../../../store/actions/system.actions"
 
 import { DeleteIcon, MenuIcon, OpenIcon } from "../../../../services/svg.service"
 import { DynamicPreview } from "../Picker/DynamicPreview"
@@ -261,27 +261,6 @@ export function TaskPreview({ task, groupId, groupColor, onSetActiveTask, highli
         }
     }
 
-    function onStatEnter(txt, name, ref) {
-        if (isOpen && type !== 'tooltip') return
-
-        setDynamicModal(
-            {
-                isOpen: true,
-                parentRefCurrent: ref.current,
-                type: 'tooltip',
-                data: { txt },
-                parentId: `${name}-tooltip`,
-                hasCaret: true,
-                isCenter: true,
-                isPosBlock: true,
-                caretClred: true
-            })
-    }
-
-    function onStatLeave(name) {
-        if (parentId === `${name}-tooltip`) resetDynamicModal()
-    }
-
     const menuOptions = [
         {
             icon: <DeleteIcon />,
@@ -375,8 +354,8 @@ export function TaskPreview({ task, groupId, groupColor, onSetActiveTask, highli
                                 <button
                                     className="task-details-btn flex justify-center"
                                     ref={openDetailsBtnRef}
-                                    onMouseEnter={() => onStatEnter('Open task page', `${currTask.id}-open-details-title`, openDetailsBtnRef)}
-                                    onMouseLeave={() => onStatLeave(`${currTask.id}-open-details-title`)}
+                                    onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, 'Open task page', `${currTask.id}-open-details-title`, openDetailsBtnRef)}
+                                    onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, `${currTask.id}-open-details-title`)}
                                 >
                                     <OpenIcon />
                                     <p>Open</p>

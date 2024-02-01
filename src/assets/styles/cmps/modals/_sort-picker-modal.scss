@@ -1,0 +1,30 @@
+.sort-picker {
+    padding: 20px 16px;
+    width: 330px;
+
+    @include for-narrow-layout {
+        width: 400px;
+    }
+
+    .title {
+        margin-block-end: rem(24px);
+        font-size: rem(15px);
+    }
+
+    .selects {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: rem(8px);
+        margin-block-end: rem(26px);
+    }
+
+    .no-select {
+        margin-block-end: rem(48px);
+    }
+
+    .add {
+        height: rem(32px);
+    }
+
+
+}

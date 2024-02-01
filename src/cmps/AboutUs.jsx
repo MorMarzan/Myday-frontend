@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { EmailIcon, GithubIcon, LinkdinIcon } from '../services/svg.service'
+import { GithubIcon, LinkdinIcon, MailIcon } from '../services/svg.service'
 import AboutUsImg from '/img/AboutUsImg.png'
 import { useSelector } from 'react-redux'
 import { resetDynamicModal, setDynamicModal, showSuccessMsg } from '../store/actions/system.actions'
@@ -130,28 +130,16 @@ export function AboutUs() {
                     <img src={AboutUsImg} alt="" />
                 </div>
                 <p className="about-us-txt">
-                    In today's fast-paced world, we understand how challenging it
-                    can be to keep up with the demands of daily life.
+                    In our fast-paced world, keeping up with daily demands can be tough. That's why we, a team of three enthusiastic full-stack programmers, developed a tool to simplify your schedule and boost productivity.
                     <br />
-                    This understanding inspired us, a trio of young and enthusiastic
-                    full-stack programmers, to create a tool designed to streamline
-                    your schedule and optimize your daily productivity.
+                    Our project, crafted in just two weeks, leverages React, Node.js, and MongoDB to offer an intuitive and efficient experience.
                     <br />
-                    Our project, a result of two weeks of dedicated work, harnesses the capabilities
-                    of React, Node.js, and MongoDB to bring you an intuitive and efficient
-                    experience.
-                    <br />
-                    While this website is for educational purposes only and all
-                    rights are reserved to monday.com, our source of inspiration, we would
-                    be delighted to receive your feedback.
-                    <br />
-                    Your thoughts and opinions are
-                    invaluable as they guide our learning journey and help us refine our skills.
+                    While this website, inspired by monday.com and for educational purposes only, holds all rights reserved to them, we eagerly welcome your feedback. Your insights are crucial for our growth and skill refinement.
                 </p>
             </div>
             <div className="about-us-contact">
                 <span ref={githubRef} onClick={() => toggleMenu(isGithubOpen, githubRef, githubOptions, 'github-menu')}><GithubIcon /></span>
-                <span ref={mailRef} onClick={() => toggleMenu(isEmailOpen, mailRef, emailOptions, 'email-menu')}><EmailIcon /></span>
+                <span className="email" ref={mailRef} onClick={() => toggleMenu(isEmailOpen, mailRef, emailOptions, 'email-menu')}><MailIcon /></span>
                 <span ref={linkRef} onClick={() => toggleMenu(isLinkedinOpen, linkRef, linkedinOptions, 'linkedin-menu')}><LinkdinIcon /></span>
             </div>
         </section>

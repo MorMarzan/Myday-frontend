@@ -4,7 +4,6 @@ import { UserImg } from "../UserImg";
 
 export function ActivityStatus({ type, fromStatus, toStatus, activityTitle = null }) {
     function getTitle(type, title) {
-        let idx
         switch (type) {
             case 'create':
                 return ''
@@ -13,6 +12,10 @@ export function ActivityStatus({ type, fromStatus, toStatus, activityTitle = nul
             case 'date':
                 if (!title || title === '-') return '-'
                 return utilService.timeStampToDate(title)
+            // case 'link':
+            //     return <a href={title.url} target="_blank">
+            //         <p>{title.displayTxt || title.url}</p>
+            //     </a>
             case 'person':
                 if (title === 'Added') return 'Added'
                 return <div className="activity-members-container">
@@ -48,7 +51,7 @@ export function ActivityStatus({ type, fromStatus, toStatus, activityTitle = nul
             //     idx = (title.length > 0) ? 0 : (title.length - 1)
             //     return title[idx]?.txt ? title[idx].txt : '-'
             default:
-                return title
+                return type
         }
     }
 

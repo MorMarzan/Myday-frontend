@@ -138,11 +138,18 @@
     .info-favorite {
         grid-area: info-favorite;
         justify-self: end;
+
+        .info {
+            padding: 6px;
+        }
+
+
     }
 
     .activities {
         grid-area: activities;
         justify-self: end;
+        padding-block: 2px;
     }
 
     .invite-more-bts {
@@ -152,15 +159,21 @@
         .invite {
             border: 1px solid $clr-btn-border;
             margin-inline-end: 8px;
+            padding-block: 6px;
         }
 
         .more {
-            padding-inline: 4px;
+            padding: 6px 6px;
+            // padding-inline: 4px;
         }
     }
 
     .display-opts {
         grid-area: display-opts;
+
+        .add-view {
+            display: none;
+        }
 
         button:not(:last-of-type) {
             font-size: rem(14px);
@@ -249,6 +262,10 @@
 
         .btn {
             height: 32px;
+
+            span {
+                padding-inline-end: 10px;
+            }
         }
 
         .search {

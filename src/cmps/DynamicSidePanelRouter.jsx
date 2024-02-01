@@ -4,6 +4,7 @@ import { PanelUpdate } from "./Panel/PanelUpdate"
 
 export function DynamicSidePanelRouter(props) {
     const { type, bodyProps } = props
+
     switch (type) {
         case 'Updates':
             return (

@@ -66,10 +66,13 @@ export function DynamicSidePanelHeader(props) {
                         key={sub}
                         className={`btn ${sub === activeSubject ? 'active' : ''}`}
                         onClick={() => {
-                            props.headerProps.onSwitchToSubject(sub)
-                            setActiveSubject(sub)
+                            if (type === 'taskDetails') {
+                                props.headerProps.onSwitchToSubject(sub)
+                                setActiveSubject(sub)
+                            }
                         }}
                     >
+
                         {sub === 'Updates' && <HomeIcon />}
                         {utilService.capitalizeFirstLetter(sub)}
                     </button>

@@ -21,9 +21,23 @@
             align-items: center;
             margin-block-end: 90px;
 
-            .btn-big-get-started {
+            .btn-get-started {
                 min-width: 130px;
-                @include getStartedBtn($padding : 16px 30px 16px 31px, $font-size :rem(16px), $arrow-before : 1.3rem, $arrow-after: 0.9rem)
+                padding: 16px 30px 16px 31px;
+
+                .get-started-txt {
+
+                    font-size: rem(16px);
+                }
+
+                .arrow-icon {
+                    right: 1.3rem;
+                }
+
+                &:hover .arrow-icon {
+                    right: 0.9rem;
+                }
+
             }
 
             .no-credit-card-txt {
@@ -105,26 +119,6 @@
         }
     }
 
-    // .btn-container {
-    //     display: flex;
-    //     flex-direction: column;
-    //     justify-content: center;
-    //     align-items: center;
-
-    //     .btn-big-get-started {
-    //         @include getStartedBtn($padding : 12px 30px 12px 26px, $font-size :1rem, $arrow-before : 1.3rem, $arrow-after: 0.9rem)
-    //     }
-
-    //     .no-credit-card-txt {
-    //         margin-top: 1rem;
-    //         color: #676879;
-
-    //         span {
-    //             margin-inline: 15px;
-    //         }
-    //     }
-
-    // }
     .btn-container {
         svg {
             width: 20px;
@@ -207,25 +201,14 @@
                 font-family: poppins-light;
                 line-height: 40px;
                 word-break: break-word;
-                // padding-bottom: 16px;
             }
 
             .btn-get-started {
-                min-width: 130px;
-                font-size: 0.8125rem;
                 margin-block-start: 32px;
                 padding: 6px 50px 6px 32px;
                 font-weight: 300;
-                background-color: #6161FF;
-                color: #ffffff;
-                border-radius: 40px;
                 line-height: 17px;
-                border: none;
                 margin-bottom: 16px;
-
-                &:hover {
-                    background-color: #5151d5;
-                }
 
                 .get-started-txt {
                     padding: 0;
@@ -249,10 +232,24 @@
                 overflow: initial;
                 text-overflow: initial;
                 white-space: initial;
+                text-align: center;
             }
 
             .boost-your-team-cta {
                 width: 100%;
+                text-align: center;
+
+                div {
+                    justify-content: center;
+                }
+            }
+        }
+
+        @media (max-width: 720px) {
+            padding-inline: 0;
+
+            h2 {
+                padding-inline: 0;
             }
         }
     }
@@ -380,8 +377,21 @@
             }
         }
 
-        .btn-footer-get-started {
-            @include getStartedBtn($padding :14px 40px 14px 36px, $font-size : 1rem, $arrow-before : 1.6rem, $arrow-after : 1.2rem)
+        .btn-get-started {
+            padding: 14px 40px 14px 36px;
+
+            .get-started-txt {
+                font-size: 1rem;
+            }
+
+            .arrow-icon {
+                right: 1.6rem;
+            }
+
+            &:hover .arrow-icon {
+                right: 1.2rem;
+            }
+
         }
 
     }

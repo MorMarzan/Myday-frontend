@@ -24,7 +24,6 @@ export function Sidebar() {
     const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
     const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const [isHovered, setIsHovered] = useState(false)
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const [filteredBoards, setFilteredBoards] = useState(boards)
     const [filterBy, setFilterBy] = useState(boardService.getDefaultBoardsFilter())
     const navigate = useNavigate()
@@ -116,10 +115,6 @@ export function Sidebar() {
 
         else changeWidthVariable(sidebarWidth)
         setIsSidebarOpen(!isSidebarOpen)
-    }
-
-    function onToggleDropdown() {
-        setIsDropdownOpen(!isDropdownOpen)
     }
 
     function onUpdateBoard(board, title) {
@@ -214,9 +209,7 @@ export function Sidebar() {
                 />
                 <SidebarWorkspace
                     filterBy={filterBy}
-                    isDropdownOpen={isDropdownOpen}
                     onAddNewBoard={onAddNewBoard}
-                    onToggleDropdown={onToggleDropdown}
                     onSetFilter={onSetFilter} />
                 <SidebarBoardNav
                     boards={filteredBoards}

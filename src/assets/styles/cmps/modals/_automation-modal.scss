@@ -17,8 +17,13 @@
         }
 
         button svg {
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
+
+            @include for-narrow-layout {
+                width: 35px;
+                height: 35px;
+            }
 
             &:hover path {
                 stroke: $clr-group-border;

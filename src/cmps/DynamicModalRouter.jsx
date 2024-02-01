@@ -8,6 +8,7 @@ import { MenuOptionsModal } from "./MenuOptionsModal"
 import BoardMemberSelect from "./Board/BoardMemberSelect"
 import { FilePicker } from "./Board/Group/Picker/PickerModals/FilePicker"
 import { Tooltip } from "./Tooltip"
+import { SortPicker } from "./Board/SortPicker"
 
 export function DynamicModalRouter(props) {
     switch (props.type) {
@@ -65,5 +66,8 @@ export function DynamicModalRouter(props) {
 
         case 'boardMemberSelect':
             return <BoardMemberSelect chosenMember={props.data.chosenMember} members={props.data.members} onChangeMember={props.data.onChangeMember} />
+
+        case 'sortPicker':
+            return <SortPicker isIntialSortEmpty={props.data.isIntialSortEmpty} />
     }
 }

@@ -1,5 +1,5 @@
 import Lottie from 'lottie-react'
-import animationData from '/icons/snowman.json'
+import animationData from '/img/snowman.json'
 
 export function LottieAnimation() {
     return (

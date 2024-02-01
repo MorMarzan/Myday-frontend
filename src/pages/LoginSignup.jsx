@@ -55,10 +55,10 @@ export function LoginSignup() {
         try {
             if (isLogin) {
                 await login(user)
-                navigate('/board/659fb84f43565a19c57dd627')
+                navigate('/board/workspace')
             } else {
                 await signup(user)
-                navigate('/board/659fb84f43565a19c57dd627')
+                navigate('/board/workspace')
             }
 
         } catch (err) {
@@ -128,7 +128,7 @@ export function LoginSignup() {
                         {!isLogin && <div className="flex align-center full-width form-section-container user-img-selection">
                             <label className='user-img-label'>Your Image:</label>
                             <label className="flex custom-file-upload">
-                                <input type="file" onChange={onImgUpload} />
+                                <input type="file" accept="image/*" onChange={onImgUpload} />
                                 {(user.imgUrl || user.fullname) ? <UserImg user={user} /> : <UserImg />}
                             </label>
                         </div>}

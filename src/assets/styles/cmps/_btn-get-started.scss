@@ -1,0 +1,37 @@
+.btn-get-started {
+    position: relative;
+    padding: 10px 20px 10px 16px;
+    background-color: #6161ff;
+    border: none;
+    border-radius: 2.5rem;
+    color: #ffff;
+    cursor: pointer;
+    text-transform: none;
+    display: flex;
+    font-family: poppins-light;
+    align-items: center;
+    justify-content: center;
+    min-width: 130px;
+    transition: all .3s;
+
+
+    .get-started-txt {
+        padding-right: 1.2em;
+        font-size: 0.8125rem;
+    }
+
+    .arrow-icon {
+        position: absolute;
+        right: 0.8rem;
+        transition: right .3s;
+
+    }
+
+    &:hover {
+        .arrow-icon {
+            right: 0.5rem;
+        }
+
+        background-color: #5151d5
+    }
+}

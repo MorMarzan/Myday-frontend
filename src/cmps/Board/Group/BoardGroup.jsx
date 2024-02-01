@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { AngleDownIcon, CollapseIcon, DeleteIcon, ExpandIcon, MenuIcon, PencilIcon } from "../../../services/svg.service"
 
 import { getBoardColors, removeGroup, updateGroup } from "../../../store/actions/board.actions"
-import { resetDynamicModal, setDynamicModal, showErrorMsg, showSuccessMsg } from "../../../store/actions/system.actions"
+import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal, setDynamicModal, showErrorMsg, showSuccessMsg } from "../../../store/actions/system.actions"
 
 import { EditableTxt } from "../../EditableTxt"
 import { TaskTable } from "./Task/TaskTable"
@@ -222,29 +222,8 @@ export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeav
         setIsEditing(true)
     }
 
-    function onStatEnter(txt, name, ref) {
-        if (isOpen && type !== 'tooltip') return
-
-        setDynamicModal(
-            {
-                isOpen: true,
-                parentRefCurrent: ref.current,
-                type: 'tooltip',
-                data: { txt },
-                parentId: `${name}-tooltip`,
-                hasCaret: true,
-                isCenter: true,
-                isPosBlock: true,
-                caretClred: true
-            })
-    }
-
-    function onStatLeave(name) {
-        if (parentId === `${name}-tooltip`) resetDynamicModal()
-    }
-
-    function onTtileHover() {
-        if (!isEditing) onStatEnter('Click to edit', `${group.id}-title`, colorBtnParentRef)
+    function onTitileHover() {
+        if (!isEditing) onTooltipParentEnter(isMobile, isOpen, type, 'Click to edit', `${group.id}-title`, colorBtnParentRef)
     }
 
     const menuOptions = [
@@ -306,16 +285,16 @@ export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeav
                                     style={{ fill: groupColor }}
                                     className="arrow-container flex svg-inherit-color"
                                     ref={collapseBtnRef}
-                                    onMouseEnter={() => onStatEnter(`${isGroupCollapsed ? 'Expand group' : 'Collapse group'}`, `${group.id}-collapse-title`, collapseBtnRef)}
-                                    onMouseLeave={() => onStatLeave(`${group.id}-collapse-title`)}
+                                    onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, `${isGroupCollapsed ? 'Expand group' : 'Collapse group'}`, `${group.id}-collapse-title`, collapseBtnRef)}
+                                    onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, `${group.id}-collapse-title`)}
                                 >
                                     <AngleDownIcon />
                                 </button>
 
                                 <div
                                     ref={colorBtnParentRef}
-                                    onMouseEnter={onTtileHover}
-                                    onMouseLeave={() => onStatLeave(`${group.id}-title`)}
+                                    onMouseEnter={onTitileHover}
+                                    onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, `${group.id}-title`)}
                                 >
                                     <EditableTxt
                                         isEditing={isEditing}

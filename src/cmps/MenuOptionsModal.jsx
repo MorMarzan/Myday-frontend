@@ -14,11 +14,3 @@ export function MenuOptionsModal({ options }) {
         </div>
     )
 }
-
-// options = [
-//     {
-//         icon: '.../../...',
-//         title: 'Delete',
-//         onOptionClick: func()
-//     }
-// ]

@@ -42,16 +42,6 @@ export function MsgList({ msgs, onLikeComment }) {
                         <section className="post-time flex align-center justify-center">
                             <ClockIcon />
                             {utilService.timeSince(msg.createdAt)}
-                            {/* <button
-                                    className={`btn btn-option-menu svg-inherit-color`}
-                                    alt="update Menu"
-                                    onClick={toggleMenu}
-                                    title="Update Menu"
-                                    data-boardid={board._id}
-                                    ref={menuBtnRef}
-                                >
-                                    <MenuIcon />
-                                </button> */}
                         </section>
                     </section>
                     <section className="post-content">
@@ -68,7 +58,7 @@ export function MsgList({ msgs, onLikeComment }) {
                         }
                     </section>
 
-                    <section className="post-actions flex align-center">
+                    {/* <section className="post-actions flex align-center">
                         <div>
                             <button className="btn" onClick={onLikeComment}>
                                 <LikeIcon />Like
@@ -77,7 +67,7 @@ export function MsgList({ msgs, onLikeComment }) {
                         <div>
                             <button className="btn"><ReplyIcon />Reply</button>
                         </div>
-                    </section>
+                    </section> */}
                 </article>
             ))}
 

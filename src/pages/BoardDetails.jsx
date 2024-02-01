@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
-import { Outlet, useParams } from "react-router"
+import { Outlet, useNavigate, useParams } from "react-router"
 import loader from "/img/board-loader.gif"
 
-import { addGroup, loadBoard, loadFilteredBoard, setFilterBy, getTask } from "../store/actions/board.actions"
+import { addGroup, loadBoard, loadFilteredBoard, setFilterBy, getTask, setSortBy } from "../store/actions/board.actions"
 
 import { BoardHeader } from "../cmps/Board/BoardHeader"
 import { TaskDetails } from "./TaskDetails"
@@ -12,18 +12,28 @@ import { boardService } from "../services/board.service"
 import { useEffectUpdate } from "../customHooks/useEffectUpdate"
 import { activityService } from "../services/activity.service"
 import { ActivityLog } from "../cmps/Panel/ActivityLog"
-import { resetDynamicModal } from "../store/actions/system.actions"
+import { resetDynamicModal, setDynamicDialog } from "../store/actions/system.actions"
+import { BrowserWarningTxt } from "../cmps/BrowserWarningTxt"
 
 export function BoardDetails() {
+    const isIncompatibleBrowser = useSelector((storeState) => storeState.systemModule.isIncompatibleBrowser)
     const board = useSelector((storeState) => storeState.boardModule.filteredBoard)
     const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
+    const sortBy = useSelector((storeState) => storeState.boardModule.sortBy)
     const isLoading = useSelector((storeState) => storeState.systemModule.isLoading)
     const modalData = useSelector((storeState) => storeState.systemModule.dynamicModal)
     const [scrollTop, setScrollTop] = useState(0)
+    const navigate = useNavigate()
     // const user = useSelector((storeState) => storeState.userModule.loggedinUser)
 
     const [isFocusLastGroup, setIsFocusLastGroup] = useState(false)
     const { boardId } = useParams()
+
+    useEffect(() => {
+        if (isIncompatibleBrowser) {
+            incompatibleBrowserAlert()
+        }
+    }, [])
 
     useEffect(() => {
         setTimeout(() => {
@@ -31,6 +41,7 @@ export function BoardDetails() {
         }, 1600)
 
         setFilterBy(boardService.getDefaultFilter()) // restart filter on nav
+        setSortBy(boardService.getDefaultSort()) // restart sort on nav
         // TODO : Emit watch on the user + add a listener for when user changes
         // socketService.emit(SOCKET_EMIT_BOARD_WATCH, boardId)
         // socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
@@ -42,7 +53,15 @@ export function BoardDetails() {
 
     useEffectUpdate(() => {
         if (board) loadFilteredBoard()
-    }, [filterBy])
+    }, [filterBy, sortBy])
+
+    function incompatibleBrowserAlert() {
+        setDynamicDialog({
+            isOpen: true,
+            onClose: () => navigate('/'),
+            contentCmp: <BrowserWarningTxt className={'browser-warning-modal'} />
+        })
+    }
 
     async function _loadBoard() {
         try {

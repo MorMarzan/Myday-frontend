@@ -3,17 +3,16 @@ import { useSelector } from "react-redux"
 
 import { BoardFilter } from "./BoardFilter"
 import { BoardEdit } from "./BoardEdit"
-import { HomeIcon, InviteIcon, PlusIcon, RobotIcon, MenuIcon, AngleDownIcon } from "../../services/svg.service"
-import { loadBoardActivities, setIsHeaderCollapsed } from "../../store/actions/board.actions"
+import { HomeIcon, InviteIcon, PlusIcon, RobotIcon, MenuIcon, AngleDownIcon, DeleteIcon } from "../../services/svg.service"
+import { loadBoardActivities, removeBoard, setIsHeaderCollapsed } from "../../store/actions/board.actions"
 import { useNavigate } from "react-router"
-import { resetDynamicDialog, resetDynamicModal, setDynamicDialog, setDynamicModal, setSidePanelOpen } from "../../store/actions/system.actions"
+import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicDialog, resetDynamicModal, setDynamicDialog, setDynamicModal, setSidePanelOpen, showErrorMsg, showSuccessMsg } from "../../store/actions/system.actions"
 import { InviteModal } from "./InviteModal"
 import { getUsers } from "../../store/actions/user.actions"
 import { AutomationModal } from "./AutomationModal"
 import { MembersDisplay } from "./MembersDisplay"
 
 export function BoardHeader({ board, filterBy, onSetFilter }) {
-    const users = useSelector((storeState) => storeState.userModule.users)
 
     const [isCollapsed, setIsCollapsed] = useState(false)
     const [activityUsers, setActivityUsers] = useState(null)
@@ -21,10 +20,13 @@ export function BoardHeader({ board, filterBy, onSetFilter }) {
     const navigate = useNavigate()
 
     const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
+    const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
     const mainTableRef = useRef(null)
     const addTableRef = useRef(null)
     const collapseBtneRef = useRef(null)
     const optTopHeaderRef = useRef(null)
+
+    const isMenuOpen = parentId === 'board-header-menu'
 
     useEffect(() => {
         loadUsers()
@@ -78,27 +80,6 @@ export function BoardHeader({ board, filterBy, onSetFilter }) {
         }
     }, [])
 
-    function onStatEnter(txt, name, ref) {
-        if (isOpen && type !== 'tooltip') return
-
-        setDynamicModal(
-            {
-                isOpen: true,
-                parentRefCurrent: ref.current,
-                type: 'tooltip',
-                data: { txt },
-                parentId: `${name}-tooltip`,
-                hasCaret: true,
-                isCenter: true,
-                isPosBlock: true,
-                caretClred: true
-            })
-    }
-
-    function onStatLeave(name) {
-        if (parentId === `${name}-tooltip`) resetDynamicModal()
-    }
-
     function getUniqueMembers(activities) {
         const uniqueMemberIds = new Set();
         const uniqueMembers = [];
@@ -136,6 +117,47 @@ export function BoardHeader({ board, filterBy, onSetFilter }) {
         })
     }
 
+    function toggleMenu() {
+        if (isMenuOpen) {
+            resetDynamicModal()
+        } else {
+            setDynamicModal(
+                {
+                    isOpen: true,
+                    parentRefCurrent: optTopHeaderRef.current,
+                    type: 'menuOptions',
+                    data: { options: menuOption },
+                    parentId: 'board-header-menu',
+                    isPosBlock: true,
+                })
+        }
+    }
+
+    async function onRemoveBoard() {
+        try {
+            await removeBoard(board._id)
+            showSuccessMsg('We successfully deleted the board')
+            resetDynamicModal()
+            navigate('/board/workspace')
+        } catch (err) {
+            console.log('Error removing board:', err)
+
+            if (err) {
+                showErrorMsg(err.message)
+            } else {
+                showErrorMsg('Cannot delete Board')
+            }
+        }
+    }
+
+    const menuOption = [
+        {
+            icon: <DeleteIcon />,
+            title: 'Delete Board',
+            onOptionClick: onRemoveBoard
+        },
+    ]
+
     const dynCollapsedClass = isCollapsed ? 'collapsed' : ''
     return (
         <>
@@ -163,10 +185,10 @@ export function BoardHeader({ board, filterBy, onSetFilter }) {
 
                     <button
                         className="btn svg-inherit-color more"
-                        // title="Options"
                         ref={optTopHeaderRef}
-                        onMouseEnter={() => onStatEnter('Options', 'options-board-header-top-title', optTopHeaderRef)}
-                        onMouseLeave={() => onStatLeave('options-board-header-top-title')}
+                        onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, 'Options', 'options-board-header-top-title', optTopHeaderRef)}
+                        onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, 'options-board-header-top-title')}
+                        onClick={toggleMenu}
                     >
                         <MenuIcon />
                     </button>
@@ -175,10 +197,9 @@ export function BoardHeader({ board, filterBy, onSetFilter }) {
                 <div className="display-opts flex align-center">
                     <button
                         className="btn main-table"
-                        // title="Main Table"
                         ref={mainTableRef}
-                        onMouseEnter={() => onStatEnter('Main Table', 'main-table-title', mainTableRef)}
-                        onMouseLeave={() => onStatLeave('main-table-title')}
+                        onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, 'Main Table', 'main-table-title', mainTableRef)}
+                        onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, 'main-table-title')}
                     >
                         <HomeIcon />
                         <span>Main Table</span>
@@ -186,10 +207,9 @@ export function BoardHeader({ board, filterBy, onSetFilter }) {
 
                     <button
                         className="btn add-view svg-inherit-color"
-                        // title="Add view"
                         ref={addTableRef}
-                        onMouseEnter={() => onStatEnter('Add view', 'add-table-title', addTableRef)}
-                        onMouseLeave={() => onStatLeave('add-table-title')}
+                        onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, 'Add view', 'add-table-title', addTableRef)}
+                        onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, 'add-table-title')}
                     >
                         <PlusIcon />
                     </button>
@@ -204,10 +224,9 @@ export function BoardHeader({ board, filterBy, onSetFilter }) {
                     <button
                         className={dynCollapsedClass + ' btn svg-inherit-color collapse'}
                         onClick={onCollapseHeader}
-                        // title="Collapse header"
                         ref={collapseBtneRef}
-                        onMouseEnter={() => onStatEnter('Collapse header', 'collapse-header-title', collapseBtneRef)}
-                        onMouseLeave={() => onStatLeave('collapse-header-title')}
+                        onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, 'Collapse header', 'collapse-header-title', collapseBtneRef)}
+                        onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, 'collapse-header-title')}
                     >
                         <AngleDownIcon />
                     </button>
@@ -218,7 +237,6 @@ export function BoardHeader({ board, filterBy, onSetFilter }) {
                     filterBy={filterBy}
                     onSetFilter={onSetFilter}
                 />
-                {/* <DynamicDialog dialogContentComponent={<InviteModal board={board} onCloseDialog={() => setIsInviteDialogOpen(false)} />} onCloseDialog={() => setIsInviteDialogOpen(false)} /> */}
             </header>
         </>
     )

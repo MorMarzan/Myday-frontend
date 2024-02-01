@@ -19,29 +19,19 @@ export function PanelFile({ files, onAddFile }) {
         fileInputRef.current.click()
     }
 
-    // const handleFileChange = (ev) => {
-    //     const selectedFiles = ev.target.files
-    //     onAddFile(selectedFiles)
-    // }
 
-
-    function handleFileChange(ev) {
-        const file = ev.target.files[0]
-
-        if (file) {
-            const reader = new FileReader()
-            reader.onloadend = async () => {
-                const imgURL = await uploadService.uploadImg(ev)
-                onAddFile(imgURL)
-            }
-            reader.readAsDataURL(file)
+    async function handleFileChange(ev) {
+        try {
+            const imgData = await uploadService.uploadImg(ev)
+            onAddFile(imgData.url)
+        } catch (err) {
+            console.log('err', err)
         }
     }
 
-    // console.log('files:', files)
     return (
         <section className="panel-file grid">
-            {(files.length > 0 && files[0] !== undefined) ? (
+            {(files.length > 0 && files[0] !== undefined && files[0] !== null) ? (
                 files.map((file, idx) => (
                     <div className="file-container" key={`file ${idx}`}>
                         <div key={idx} className="file-item" onClick={() => openImagePreview(file)}>
@@ -51,7 +41,7 @@ export function PanelFile({ files, onAddFile }) {
                 ))
             ) : (
                 <div className="no-files-message grid place-center">
-                    <img src="/icons/empty-file.svg" alt="" />
+                    <img src="/img/empty-file.svg" alt="" />
 
                     <div>
                         <span className="bold">Drag & drop</span>

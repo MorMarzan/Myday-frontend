@@ -1,4 +1,4 @@
-import React from 'react'
+import { useRef } from 'react'
 import { Routes, Route } from 'react-router'
 import { useSession } from '@supabase/auth-helpers-react'
 import 'animate.css';
@@ -18,9 +18,12 @@ import { utilService } from './services/util.service';
 
 export function RootCmp() {
     const session = useSession()
+    const isLogMsgPrinted = useRef(false)
+
 
     useEffect(() => {
         window.addEventListener('resize', handleScreenResize)
+        printLogMsg()
 
         return () => {
             window.removeEventListener('resize', handleScreenResize)
@@ -29,17 +32,38 @@ export function RootCmp() {
 
 
     useEffect(() => {
-        if (session) {
-            if (session.provider_token) utilService.saveToStorage('provider_token', session.provider_token)
-        } else {
-            utilService.saveToStorage('provider_token', null)
+        if (session && session.provider_token) {
+            utilService.saveToStorage('provider_token', session.provider_token)
         }
 
     }, [session])
 
+    function printLogMsg() {
+        if (isLogMsgPrinted.current) return
+        console.log(
+            `%cLooking for web developers?\n%cWe're looking for a job. Contact us!\n\n
+            %c Noam Saar: %chttps://www.linkedin.com/in/noam-saar-8266662a1/\n
+            %c Eden Rize: %chttps://www.linkedin.com/in/eden-rize-9476541b7/\n
+            %c Mor Marzan: %chttps://www.linkedin.com/in/mor-marzan-26b48621a/\n`,
+            "color: #6161ff; font-size:20px;",
+            "color: #FFCE04; font-size:14px;",
+            "color: #F6335A; font-size:14px;",
+            "color: #F6335A; font-size:14px;",
+            "color: #FFCE04; font-size:14px;",
+            "color: #FFCE04; font-size:14px;",
+            "color: #04CC77; font-size:14px;",
+            "color: #04CC77; font-size:14px;"
+        );
+
+
+        isLogMsgPrinted.currant = true
+
+    }
     function handleScreenResize() {
         setIsMobile(window.innerWidth <= 905)
     }
+
+
 
     return (
         <section className="app">

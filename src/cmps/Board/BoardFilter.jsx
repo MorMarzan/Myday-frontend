@@ -2,19 +2,18 @@ import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 
 import { addTask, getMemberFromBoard } from "../../store/actions/board.actions"
-import { resetDynamicModal, setDynamicDialog, setDynamicModal, setDynamicModalData, showErrorMsg } from "../../store/actions/system.actions"
+import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal, setDynamicDialog, setDynamicModal, setDynamicModalData, showErrorMsg } from "../../store/actions/system.actions"
 
 import { CloseFilledIcon, FilterIcon, HideIcon, PersonIcon, PlusIcon, RobotIcon, SearchIcon, SettingsKnobsIcon, SortIcon } from "../../services/svg.service"
 import { UserImg } from "../UserImg"
 import { DynamicInput } from "../DynamicInput"
 import { AutomationModal } from "./AutomationModal"
+import { boardService } from "../../services/board.service"
 
 export function BoardFilter({ board, filterBy, onSetFilter }) {
     const filterSearchRef = useRef(null)
     const personBtnRef = useRef(null)
-    const filterBtnRef = useRef(null)
     const sortBtnRef = useRef(null)
-    const hideBtnRef = useRef(null)
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const [isFocused, setIsFocused] = useState(false)
@@ -22,6 +21,10 @@ export function BoardFilter({ board, filterBy, onSetFilter }) {
     const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
     const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
     const isMemberPickerOpen = parentId === `${board._id}-memberFilterPicker`
+    const isSortPickerOpen = parentId === `${board._id}-sortPicker`
+
+    const sortBy = useSelector(storeState => storeState.boardModule.sortBy)
+    const isIntialSortEmpty = JSON.stringify(sortBy) === JSON.stringify(boardService.getDefaultSort())
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutsideSearch)
@@ -57,7 +60,7 @@ export function BoardFilter({ board, filterBy, onSetFilter }) {
 
     function toggleMemberFilter(ev) {
         ev.stopPropagation()
-        if (isMemberPickerOpen) { //check if curr modal picker is open
+        if (isMemberPickerOpen) {
             resetDynamicModal()
         } else {
             setDynamicModal({
@@ -68,6 +71,24 @@ export function BoardFilter({ board, filterBy, onSetFilter }) {
                 data: { chosenMember: filterByToEdit.member, onChangeMember: setMemberFilter, members: board.members },
                 isPosBlock: true,
                 isCenter: true
+            })
+        }
+    }
+
+    function toggleSortPicker(ev) {
+        if (isSortPickerOpen) {
+            resetDynamicModal()
+        } else {
+            setDynamicModal({
+                isOpen: true,
+                parentRefCurrent: sortBtnRef.current,
+                type: 'sortPicker',
+                data: { isIntialSortEmpty },
+                parentId: `${board._id}-sortPicker`,
+                isPosBlock: true,
+                isCenter: false,
+                hasCaret: false,
+
             })
         }
     }
@@ -109,27 +130,6 @@ export function BoardFilter({ board, filterBy, onSetFilter }) {
     function onCancelSearch() {
         setIsFocused(false)
         setFilterByToEdit(prevFilter => ({ ...prevFilter, 'txt': '' }))
-    }
-
-    function onStatEnter(txt, name, ref) {
-        if (isOpen && type !== 'tooltip') return
-
-        setDynamicModal(
-            {
-                isOpen: true,
-                parentRefCurrent: ref.current,
-                type: 'tooltip',
-                data: { txt },
-                parentId: `${name}-tooltip`,
-                hasCaret: true,
-                isCenter: true,
-                isPosBlock: true,
-                caretClred: true
-            })
-    }
-
-    function onStatLeave(name) {
-        if (parentId === `${name}-tooltip`) resetDynamicModal()
     }
 
     function onAutomateClick() {
@@ -188,8 +188,8 @@ export function BoardFilter({ board, filterBy, onSetFilter }) {
                 // title="Filter by person"
                 onClick={toggleMemberFilter}
                 ref={personBtnRef}
-                onMouseEnter={() => onStatEnter('Filter by person', 'person-filter-title', personBtnRef)}
-                onMouseLeave={() => onStatLeave('person-filter-title')}
+                onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, 'Filter by person', 'person-filter-title', personBtnRef)}
+                onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, 'person-filter-title')}
             >
                 {filterByToEdit.member ? <UserImg user={getMemberFromBoard(board, filterByToEdit.member)} /> : <PersonIcon />}
                 <span>Person</span>
@@ -210,30 +210,32 @@ export function BoardFilter({ board, filterBy, onSetFilter }) {
                 className="btn filter"
                 // title="Filter by anything"
                 ref={filterBtnRef}
-                onMouseEnter={() => onStatEnter('Filter by anything', 'general-filter-title', filterBtnRef)}
-                onMouseLeave={() => onStatLeave('general-filter-title')}
+                onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, 'Filter by anything', 'general-filter-title', filterBtnRef)}
+                onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, 'general-filter-title')}
             >
                 <FilterIcon />
                 <span>Filter</span>
-            </button>
+            </button> */}
 
             <button
-                className="btn sort"
+                // className="btn sort"
+                className={` btn ${!isIntialSortEmpty || isSortPickerOpen ? 'active' : ''} sort`}
                 title="Sort by column"
                 ref={sortBtnRef}
-                onMouseEnter={() => onStatEnter('Sort by column', 'sort-title', sortBtnRef)}
-                onMouseLeave={() => onStatLeave('sort-title')}
+                onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, 'Sort by column', 'sort-title', sortBtnRef)}
+                onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, 'sort-title')}
+                onClick={toggleSortPicker}
             >
                 <SortIcon />
-                <span>Sort</span>
+                <span>Sort{!isIntialSortEmpty && ' / 1'}</span>
             </button>
 
-            <button
+            {/* <button
                 className="btn hide"
                 title="Hidden columns"
                 ref={hideBtnRef}
-                onMouseEnter={() => onStatEnter('Hidden columns', 'hide-btn-title', hideBtnRef)}
-                onMouseLeave={() => onStatLeave('hide-btn-title')}
+                onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, 'Hidden columns', 'hide-btn-title', hideBtnRef)}
+                onMouseLeave={() => onTooltipParentLeave(isMobile, parentId, 'hide-btn-title')}
             >
                 <HideIcon />
                 <span>Hide</span>

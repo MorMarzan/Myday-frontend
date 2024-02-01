@@ -17,6 +17,7 @@ export const boardService = {
     saveBoards,
     getBoardColors,
     getDefaultFilter,
+    getDefaultSort,
     addGroup,
     removeGroup,
     updateGroup,
@@ -97,6 +98,10 @@ function getBoardColors() {
 
 function getDefaultFilter() {
     return { txt: '', includedCols: [], member: '' }
+}
+
+function getDefaultSort() {
+    return { type: '', dir: 1 }
 }
 
 function getDefaultBoardsFilter() {
@@ -313,7 +318,13 @@ async function updateTask(boardId, groupId, task, prevState, newState) {
 
         const savedBoard = await save(board)
 
-        if (newState || prevState && activityFrom !== activityTo) activityService.save(activity)
+        if ((newState || prevState) &&
+            (activityFrom !== activityTo) &&
+            newState.field !== 'link' &&
+            newState.field !== 'file' &&
+            prevState.field !== 'link' &&
+            prevState.field !== 'file'
+        ) activityService.save(activity)
         return savedBoard
     } catch (err) {
         throw new Error(err.message || 'An err occurred during removing task')
@@ -364,17 +375,14 @@ function _getDefaultTask(title) {
 
 function getNewUpdate(txt) {
     return {
-        createdAt: Date.now().toString(),
+        createdAt: Date.now(),
         id: utilService.makeId(),
         likes: [],
-        // memberId: userService.getLoggedinUser() ? userService.getLoggedinUser()._id : '659fd52d810c3f98c2054719',
         memberId: userService.getLoggedinUser() ? userService.getLoggedinUser()._id : null,
         txt,
         msgs: [],
     }
 }
-
-
 
 
 function getDefaultLabel() {

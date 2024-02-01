@@ -33,12 +33,15 @@ import Mobile from '/img/home_page/MobileApp.avif'
 import Automation from '/img/home_page/Automation.avif'
 import Comment from '/img/home_page/Talk.avif'
 import Dashboard from '/img/home_page/Dash.avif'
+import { BrowserWarning } from "../cmps/BrowserWarning"
+import { GetStartedBtn } from "../cmps/GetStartedBtn"
 
 export function HomePage() {
     const [scrolled, setScrolled] = useState(false)
     const navigate = useNavigate()
 
-    // const [activeTab, setActiveTab] = useState('work-management-tab')
+
+
 
     window.onscroll = function handleScroll() {
         const isScrolled = window.scrollY > 0
@@ -48,6 +51,7 @@ export function HomePage() {
         <section className="home-page page">
             <HomeHeader scrolled={scrolled} />
             <main className="home-page-content main-layout">
+                <BrowserWarning />
                 <section className='main-titles-container'>
                     <h1 className='home-main-title'>
                         A platform built for a <br />
@@ -92,10 +96,7 @@ export function HomePage() {
                 </section>
 
                 <section className='btn-container'>
-                    <button onClick={() => navigate('/board/659fb84f43565a19c57dd627')} className='btn-big-get-started'>
-                        <span className='get-started-txt'>Get Started</span>
-                        <ArrowRightIcon />
-                    </button>
+                    <GetStartedBtn />
                     <p className='no-credit-card-txt'>No credit card needed<span>✦</span>Unlimited time on Free plan</p>
                 </section>
 
@@ -128,7 +129,7 @@ export function HomePage() {
                             customizing any workflow to fit your needs.
                         </span>
                         <div className="flex">
-                            <button onClick={() => navigate('/board/659fb84f43565a19c57dd627')} className='btn-get-started'><span className='get-started-txt'>Get Started</span>
+                            <button onClick={() => navigate('/board/workspace')} className='btn-get-started'><span className='get-started-txt'>Get Started</span>
                                 <ArrowRightIcon />
                             </button>
                         </div>
@@ -173,10 +174,11 @@ export function HomePage() {
             <section className="footer-section full">
                 <h2>Deliver your best work <span>with myday.com</span></h2>
                 <p>No credit card needed   <span>✦</span>   Unlimited time on Free plan</p>
-                <button className="btn-footer-get-started" onClick={() => navigate('/board/659fb84f43565a19c57dd627')}>
+                <GetStartedBtn />
+                {/* <button className="btn-footer-get-started" onClick={() => navigate('/board/workspace')}>
                     <span className="get-started-txt">Get Started</span>
                     <ArrowRightIcon />
-                </button>
+                </button> */}
 
             </section>
         </section >

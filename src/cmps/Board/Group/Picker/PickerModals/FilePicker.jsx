@@ -7,21 +7,14 @@ export function FilePicker({ chosenFile, changeFile, taskId }) {
     const [newFile, setNewFile] = useState(chosenFile)
     const fileInputRef = useRef(null);
 
-    function onUploadFile(ev) {
-        console.log('onUploadFile ~ ev:', ev)
-        const file = ev.target.files[0]
-        console.log('onUploadFile ~ file:', file)
-
-        if (file) {
-            const reader = new FileReader()
-            reader.onloadend = async () => {
-                const imgURL = await uploadService.uploadImg(ev)
-
-                setNewFile(imgURL)
-                changeFile('file', imgURL, taskId)
-                resetDynamicModal()
-            }
-            reader.readAsDataURL(file)
+    async function onUploadFile(ev) {
+        try {
+            const imgData = await uploadService.uploadImg(ev)
+            setNewFile(imgData.url)
+            changeFile('file', imgData.url, taskId)
+            resetDynamicModal()
+        } catch (err) {
+            console.log('err', err)
         }
     }
 
@@ -48,7 +41,7 @@ export function FilePicker({ chosenFile, changeFile, taskId }) {
             <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"  // Specify the accepted file types if needed
+                accept="image/*"
                 value={newFile ? `File: ${newFile}` : ''}
                 style={{
                     position: 'absolute',

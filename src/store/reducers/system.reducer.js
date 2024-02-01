@@ -16,6 +16,7 @@ export const SET_DYNAMIC_PANEL_DATA = 'SET_DYNAMIC_PANEL_DATA'
 export const SET_SIDE_PANEL_OPEN = 'SET_SIDE_PANEL_OPEN'
 export const SET_IS_FULL_SIDEBAR_MOBILE = 'SET_IS_FULL_SIDEBAR_MOBILE'
 export const SET_IS_MOBILE = 'SET_IS_MOBILE'
+export const SET_IS_INCOMPATIBLE_BROWSER = 'SET_IS_INCOMPATIBLE_BROWSER'
 
 const initialState = {
   isLoading: false,
@@ -29,7 +30,8 @@ const initialState = {
     data: {}
   },
   isFullSidebarMobile: true,
-  isMobile: window.innerWidth <= 905
+  isMobile: window.innerWidth <= 905,
+  isIncompatibleBrowser: navigator.userAgent.includes("SamsungBrowser")
 }
 
 export function systemReducer(state = initialState, action = {}) {
@@ -96,6 +98,9 @@ export function systemReducer(state = initialState, action = {}) {
     //mobile
     case SET_IS_MOBILE:
       return { ...state, isMobile: action.isMobile }
+
+    case SET_IS_INCOMPATIBLE_BROWSER:
+      return { ...state, isIncompatibleBrowser: action.isIncompatibleBrowser }
 
     default: return state
   }

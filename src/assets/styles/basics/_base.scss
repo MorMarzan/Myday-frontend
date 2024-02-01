@@ -17,6 +17,10 @@ html {
 
 body {
     margin: 0;
+
+    &:has(.menu-option-modal) {
+        overflow: hidden;
+    }
 }
 
 h1,

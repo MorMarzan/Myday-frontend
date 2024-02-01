@@ -1,0 +1,180 @@
+.info-modal {
+    position: relative;
+
+    .board-description-container {
+        background-color: white;
+        color: $clr-font;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        padding: 10px 26px 26px 26px;
+        height: 450px;
+
+        @include for-narrow-layout {
+            padding: 16px 32px 32px 32px;
+            height: 550px;
+        }
+
+        .editable-txt-container {
+
+            @include for-narrow-layout {
+                min-width: 460px;
+                max-width: 460px;
+
+            }
+        }
+
+        .title-container .editable-txt-container {
+            font-size: rem(20px);
+            font-family: poppins-medium;
+
+            @include for-narrow-layout {
+                font-size: rem(32px);
+            }
+
+            .editable-txt,
+            .focused-input {
+                padding-inline: 4px;
+            }
+
+            @include for-narrow-only-layout {
+
+                .editable-txt,
+                .focused-input input {
+                    max-width: 110px;
+                }
+            }
+
+            .editable-txt {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+
+        .description-container {
+            height: 100%;
+            margin-block: 24px 20px;
+
+            textarea {
+                width: 100%;
+                height: 100%;
+                font-family: figtree;
+                color: $clr-light-font;
+                border: unset;
+                resize: none;
+                line-height: 1.2;
+                font-size: rem(14px);
+
+                &:hover:not(.edit-mode) {
+                    outline: 1px dashed $clr-btn-border;
+                }
+
+                &.edit-mode {
+                    outline: 1px solid $clr-btn-border;
+                }
+
+                @include for-narrow-layout {
+                    font-size: initial;
+                }
+            }
+        }
+
+        .feedback {
+            width: fit-content;
+            padding: 8px;
+            fill: $clr-font;
+
+            svg {
+                margin-inline-end: 8px;
+            }
+
+            &:hover {
+                color: #0073ea;
+                fill: #0073ea;
+            }
+        }
+    }
+
+    .board-data-container {
+
+        background-color: $clr-task-hover;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        padding: 15px;
+        color: $clr-font;
+
+        @include for-narrow-layout {
+            width: 323px;
+            padding: 32px;
+        }
+
+        &>* {
+            margin-block-end: 24px;
+        }
+
+        .board-info-title {
+            font-size: rem(16px);
+
+        }
+
+        .additional-info {
+            .title {
+                color: $clr-light-font;
+                margin-block-end: 8px;
+            }
+
+            .workspace-display {
+                padding: 0;
+                margin: 0;
+                height: fit-content;
+
+            }
+
+            .creation-info {
+                .user-container {
+                    width: fit-content;
+                    height: fit-content;
+                    border-radius: 50%;
+
+                    .user-img {
+                        max-height: 32px;
+                        max-width: 32px;
+                        min-height: 32px;
+                        min-width: 32px;
+                        margin-inline-end: 8px;
+                    }
+                }
+            }
+
+            span {
+                font-size: rem(14px);
+                font-family: figtree;
+            }
+        }
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        border-radius: 4px;
+
+        &:hover {
+            background-color: $clr-btn-hover;
+        }
+
+        svg {
+            width: 30px;
+            height: 30px;
+
+            @include for-narrow-layout {
+                width: 35px;
+                height: 35px;
+            }
+
+            path {
+                stroke-width: 1;
+            }
+        }
+    }
+}

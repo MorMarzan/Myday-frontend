@@ -1,0 +1,54 @@
+.workspace-display {
+    gap: 7px;
+    justify-content: start;
+    grid-template-columns: auto auto 1fr;
+    height: 32px;
+
+    padding-inline: 8px;
+    margin-inline-end: 12px;
+    font-family: figtree-bold;
+
+    div:last-of-type {
+        justify-self: end;
+        align-self: center;
+    }
+
+    span {
+        font-size: rem(16px);
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+        align-self: center;
+    }
+
+    &>img {
+        width: 18px;
+        height: 18px;
+    }
+
+    &.open {
+        background-color: $clr-btn-active;
+
+        &>img {
+            transform: rotate(180deg);
+        }
+    }
+
+    .workspace-logo {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        border-radius: $border-radius-small;
+        background-color: $clr-workspace-logo;
+
+        color: $clr0;
+
+        div {
+            position: absolute;
+            bottom: -10px;
+            right: -12px;
+            height: 20px;
+            width: 20px;
+        }
+    }
+}

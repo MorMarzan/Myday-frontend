@@ -103,7 +103,7 @@ export function PanelUpdate({ msgs, onAddUpdate }) {
                 <MsgList msgs={msgs} onLikeComment={onLikeComment} />
                 : (
                     <div className="post-not-found grid place-center">
-                        <img src="/icons/no-updates.svg" alt="" />
+                        <img src="/img/no-updates.svg" alt="" />
                         <div className="post-not-found-txt">
                             <h2>No Updates yet for this item</h2>
                             <p className="post-not-found-subtitle">Be the first one to update about progress, mention someone

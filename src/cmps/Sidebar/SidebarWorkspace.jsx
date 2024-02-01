@@ -4,18 +4,13 @@ import { SidebarWorkspaceNav } from "./SidebarWorkspaceNav"
 export function SidebarWorkspace(
     {
         filterBy,
-        isDropdownOpen,
         onSetFilter,
-        onToggleDropdown,
         onAddNewBoard,
     }) {
 
     return (
         <section className="sidebar-workspace">
-            <SidebarWorkspaceNav
-                isDropdownOpen={isDropdownOpen}
-                onToggleDropdown={onToggleDropdown}
-            />
+            <SidebarWorkspaceNav />
             <SidebarFilter
                 filterBy={filterBy}
                 onAddNewBoard={onAddNewBoard}

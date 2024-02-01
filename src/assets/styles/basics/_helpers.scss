@@ -269,19 +269,3 @@
     cursor: not-allowed !important;
     opacity: .7;
 }
-
-// .fast-animation {
-//     animation-duration: .2s !important;
-// }
-
-//refernce to after caret from top
-// &::after {
-//     content: "";
-//     position: absolute;
-//     border-style: solid;
-//     border-width: 0 10px 10px 10px;
-//     border-color: transparent transparent white transparent;
-//     top: -10px;
-//     left: 50%;
-//     transform: translateX(-50%);
-// }

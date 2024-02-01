@@ -43,9 +43,3 @@
         color: #5034ff;
     }
 }
-
-
-
-.btn-get-started {
-    @include getStartedBtn($padding : 10px 20px 10px 16px, $font-size :0.8125rem)
-}

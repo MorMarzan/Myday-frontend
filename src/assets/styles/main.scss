@@ -11,7 +11,6 @@
 @import "basics/forms";
 
 // Views
-@import "views/about-us";
 @import "views/home-page";
 @import "views/board-details";
 @import "views/user-details";
@@ -27,6 +26,11 @@
 @import "cmps/tooltip";
 @import "cmps/activity-preview";
 @import "cmps/about-us";
+@import "cmps/workspace-page";
+@import "cmps/workspace-display";
+@import "cmps/browser-warning";
+@import "cmps/custom-select";
+@import "cmps/btn-get-started";
 
 // board
 @import "cmps/board/board-app";
@@ -34,6 +38,7 @@
 @import "cmps/board/members-display";
 @import "cmps/board/board-header";
 @import "cmps/board/board-group";
+@import "cmps/board/star";
 
 //summary
 @import "cmps/board/summary/group-summary";
@@ -63,10 +68,12 @@
 @import "cmps/modals/link-picker-modal";
 @import "cmps/modals/status-picker-modal";
 @import "cmps/modals/member-picker-modal";
+@import "cmps/modals/sort-picker-modal";
 @import "cmps/modals/invite-modal";
 @import "cmps/modals/automation-modal";
 @import "cmps/modals/automation-list";
 @import "cmps/modals/label-picker-preview";
+@import "cmps/modals/info-modal";
 @import "cmps/board-member-select";
 @import "cmps/dynamic-dialog";
 

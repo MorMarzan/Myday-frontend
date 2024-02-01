@@ -41,6 +41,7 @@ $clr-font: #323338;
 $clr-light-font: #676879;
 
 // main bg colors
+$clr-bg-workspace: #f6f7fb;
 $clr-bg-header: #eceff8;
 $clr-bg-open-modal: #292f4cb3;
 
@@ -99,6 +100,11 @@ $card-colors: (
     rgb(105, 169, 202),
     rgb(108, 108, 255)
 );
+
+// col icon bg
+$clr-col-title: #ffcc00;
+$clr-col-member: #00cff4;
+$clr-col-label: #11dd80;
 
 // layout
 $layout-padding: 18px;

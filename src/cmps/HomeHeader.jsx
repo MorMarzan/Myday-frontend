@@ -2,9 +2,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Logo from '/img/myday-temp-logo.png'
 
-import { login, logout, signup } from '../store/actions/user.actions'
-import { showErrorMsg, showSuccessMsg } from '../store/actions/system.actions'
-import { ArrowRightIcon } from '../services/svg.service'
+import { GetStartedBtn } from './GetStartedBtn'
 
 export function HomeHeader({ scrolled }) {
     const navigate = useNavigate()
@@ -17,9 +15,7 @@ export function HomeHeader({ scrolled }) {
                 {!user && <div className='btn-header-login' onClick={() => navigate('/auth/login')}>
                     Log in
                 </div>}
-                <button onClick={() => navigate('/board/659fb84f43565a19c57dd627')} className='btn-get-started'><span className='get-started-txt'>Get Started</span>
-                    <ArrowRightIcon />
-                </button>
+                <GetStartedBtn />
             </div>
         </header>
     )
