@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-import { GroupTitlesList } from "../GroupTitlesList";
+import { useSelector } from "react-redux"
+import { GroupTitlesList } from "../GroupTitlesList"
 
 export function TaskHeaderList({ groupColor, titlesOrder }) {
     const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)

@@ -1,4 +1,4 @@
-import { utilService } from "../services/util.service";
+import { utilService } from "../services/util.service"
 
 export function UserImg({ user }) {
     return (
@@ -16,6 +16,6 @@ export function UserImg({ user }) {
                 />
             )}
         </>
-    );
+    )
 }
 

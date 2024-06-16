@@ -2,19 +2,20 @@ import { useSelector } from "react-redux"
 import { useRef } from "react"
 
 import { utilService } from "../../../../services/util.service"
-import { setDynamicModal, resetDynamicModal } from "../../../../store/actions/system.actions"
 import { CloseIcon, DangerIcon } from "../../../../services/svg.service"
 
+import { setDynamicModal, resetDynamicModal } from "../../../../store/actions/system.actions"
+
 export function DatePreview({ task, onUpdate }) {
+    const { parentId } = useSelector((storeState) => storeState.systemModule.dynamicModal)
     const previewBtnRef = useRef(null)
 
-    const { parentId } = useSelector((storeState) => storeState.systemModule.dynamicModal)
     const isCurrPickerOpen = parentId === `${task.id}-datePicker`
     const selectedDate = task.date
     const hasTimePassed = utilService.hasTimePassed(selectedDate)
     const isTaskDone = task.status === 'l101'
 
-    function onDatePreviewClick(ev) {
+    function onDatePreviewClick() {
         if (isCurrPickerOpen) {
             resetDynamicModal()
         } else {

@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router"
-import { CloseIcon, HomeIcon, MenuIcon, PersonIcon } from "../services/svg.service"
-// import { MemberPicker } from "./Board/Group/Picker/PickerModals/MemberPicker"
-import { UserImg } from "./UserImg"
+
 import { utilService } from "../services/util.service"
+
 import { setSidePanelOpen } from "../store/actions/system.actions"
 import { getUserById } from "../store/actions/user.actions"
+
+import { CloseIcon, HomeIcon, MenuIcon } from "../services/svg.service"
+import { UserImg } from "./UserImg"
 
 export function DynamicSidePanelHeader(props) {
     const { type, title, subjects, members } = props.headerProps
     const { boardId, taskId } = props
+
     const [users, setUsers] = useState(null)
     const [activeSubject, setActiveSubject] = (type === 'taskDetails') ? useState('Updates') : useState('Activity Log')
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -23,11 +27,6 @@ export function DynamicSidePanelHeader(props) {
         const taskMembers = memberIds.map(memberId => getUserById(memberId))
         setUsers(taskMembers)
     }
-
-    // function onClosePanel() {
-    //     setSidePanelOpen(false)
-    //     // navigate('borad/' + boardId)
-    // }
 
     if (!users?.length) return
 

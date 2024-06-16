@@ -5,10 +5,10 @@ import { LabelPicker } from "./Board/Group/Picker/PickerModals/LabelPicker"
 import { DatePicker } from "./Board/Group/Picker/PickerModals/DatePicker"
 import { LinkPicker } from "./Board/Group/Picker/PickerModals/LinkPicker"
 import { MenuOptionsModal } from "./MenuOptionsModal"
-import BoardMemberSelect from "./Board/BoardMemberSelect"
 import { FilePicker } from "./Board/Group/Picker/PickerModals/FilePicker"
 import { Tooltip } from "./Tooltip"
 import { SortPicker } from "./Board/SortPicker"
+import BoardMemberSelect from "./Board/BoardMemberSelect"
 
 export function DynamicModalRouter(props) {
     switch (props.type) {

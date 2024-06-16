@@ -1,13 +1,12 @@
 
 
-import { useEffect, useState } from "react";
-import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react"
+import { useParams } from "react-router"
+import { useSelector } from "react-redux"
 
-import { DynamicSidePanelHeader } from "../DynamicSidePanelHeader";
-import { DynamicSidePanelRouter } from "../DynamicSidePanelRouter";
-import { loadBoardActivities } from "../../store/actions/board.actions";
-
+import { DynamicSidePanelHeader } from "../DynamicSidePanelHeader"
+import { DynamicSidePanelRouter } from "../DynamicSidePanelRouter"
+import { loadBoardActivities } from "../../store/actions/board.actions"
 
 export function ActivityLog() {
     const currBoard = useSelector((storeState) => storeState.boardModule.currBoard)

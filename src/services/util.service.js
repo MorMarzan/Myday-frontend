@@ -123,9 +123,6 @@ function timeSince(timeStamp) {
     if (secondsPast < 60) {
         return 'just now'
     }
-    // if (secondsPast < 60) {
-    //     return parseInt(secondsPast) + 's'
-    // }
     if (secondsPast < 3600) {
         return parseInt(secondsPast / 60) + 'm'
     }

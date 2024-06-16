@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react"
-import { FilePreview } from "../Picker/FilePreview"
 import { updateTask } from "../../../../store/actions/board.actions"
+import { FilePreview } from "../Picker/FilePreview"
 
 export function FileSummary({ group, board }) {
-    const [fileSummaries, setFileSummaries] = useState();
+    const [fileSummaries, setFileSummaries] = useState()
 
     useEffect(() => {
-        setFileSummaries(generateFileSummaries());
-    }, [group]);
+        setFileSummaries(generateFileSummaries())
+    }, [group])
 
     function generateFileSummaries() {
         return group.tasks
             .map(task => ({ file: task.file, taskId: task.id }))
-            .filter(fileSummary => fileSummary.file);
+            .filter(fileSummary => fileSummary.file)
     }
 
     function onFileUpdate(field, receivedData, taskId) {
-        const task = group.tasks.find(task => task.id === taskId);
-        const updatedTask = { ...task, [field]: receivedData };
-        updateTask(board._id, group.id, updatedTask);
+        const task = group.tasks.find(task => task.id === taskId)
+        const updatedTask = { ...task, [field]: receivedData }
+        updateTask(board._id, group.id, updatedTask)
     }
 
-    if (!fileSummaries || !fileSummaries.length) return <li className="file-summary flex column"><p>File</p></li>;
+    if (!fileSummaries || !fileSummaries.length) return <li className="file-summary flex column"><p>File</p></li>
     return (
         <li className="file-summary flex column">
             <p>File</p>
@@ -37,6 +37,6 @@ export function FileSummary({ group, board }) {
                 ))}
             </ul>
         </li>
-    );
+    )
 }
 

@@ -1,19 +1,25 @@
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
-import { updateBoard } from "../../store/actions/board.actions"
-import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal, setDynamicDialog, setDynamicModal, setDynamicModalData, setIsFullSidebarMobile, showErrorMsg } from "../../store/actions/system.actions"
-import { EditableTxt } from "../EditableTxt"
-import { ArrowLeftIcon, FilledStarIcon, InfoIcon, StarIcon } from "../../services/svg.service"
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate"
+
+import { updateBoard } from "../../store/actions/board.actions"
+import {
+    onTooltipParentEnter, onTooltipParentLeave, setDynamicDialog,
+    setDynamicModalData, setIsFullSidebarMobile, showErrorMsg
+} from "../../store/actions/system.actions"
+
+import { ArrowLeftIcon, InfoIcon } from "../../services/svg.service"
+import { EditableTxt } from "../EditableTxt"
 import { InfoModal } from "./InfoModal"
 import { Star } from "./Star"
 
 export function BoardEdit({ board }) {
+    const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
+    const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
+
     const [boardToEdit, setBoardToEdit] = useState(board)
     const [isEditing, setIsEditing] = useState(false)
 
-    const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
-    const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
     const titleRef = useRef(null)
     const infoRef = useRef(null)
 
@@ -65,7 +71,6 @@ export function BoardEdit({ board }) {
             contentCmp: <InfoModal />
         })
     }
-
 
     const { title } = boardToEdit
 

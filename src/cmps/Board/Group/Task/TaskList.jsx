@@ -1,11 +1,14 @@
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import { useSelector } from "react-redux"
 import { useState } from "react"
+import { useSelector } from "react-redux"
+
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
+
 import { addTask, setActiveTask, updateBoardOrder } from "../../../../store/actions/board.actions"
+
 import { TaskPreview } from "./TaskPreview"
 import { AddTask } from "./AddTask"
 
-export function TaskList({ groupId, groupColor, highlightText, filterBy }) {
+export function TaskList({ groupId, groupColor, filterBy }) {
     const board = useSelector((storeState) => storeState.boardModule.filteredBoard)
     const [taskTitle, setTaskTitle] = useState('')
 
@@ -26,7 +29,6 @@ export function TaskList({ groupId, groupColor, highlightText, filterBy }) {
             await updateBoardOrder(board)
         } catch (err) {
             console.log('Cannot save group:', err)
-            // showErrorMsg('Cannot save group')
         }
     }
 
@@ -71,7 +73,6 @@ export function TaskList({ groupId, groupColor, highlightText, filterBy }) {
                                                     groupId={groupId}
                                                     groupColor={groupColor}
                                                     onSetActiveTask={onSetActiveTask}
-                                                    highlightText={highlightText}
                                                     filterBy={filterBy}
                                                 />
                                             </div>
@@ -79,7 +80,6 @@ export function TaskList({ groupId, groupColor, highlightText, filterBy }) {
                                     </Draggable>
                                 ))
                             }
-
                             {provided.placeholder}
                         </div>
                     )}

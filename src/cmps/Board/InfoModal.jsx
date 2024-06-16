@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
-import { updateBoard } from "../../store/actions/board.actions"
-import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicDialog, resetDynamicModal, setDynamicModal, showErrorMsg } from "../../store/actions/system.actions"
-import { EditableTxt } from "../EditableTxt"
-import { CloseIcon, FeedbackIcon } from "../../services/svg.service"
-import WorkspaceDisplay from "../WorkspaceDisplay"
-import { UserImg } from "../UserImg"
+
 import { utilService } from "../../services/util.service"
+
+import { updateBoard } from "../../store/actions/board.actions"
+import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicDialog, showErrorMsg } from "../../store/actions/system.actions"
+
+import { CloseIcon, FeedbackIcon } from "../../services/svg.service"
+import { EditableTxt } from "../EditableTxt"
+import { UserImg } from "../UserImg"
+import WorkspaceDisplay from "../WorkspaceDisplay"
 
 export function InfoModal() {
     const board = useSelector((storeState) => storeState.boardModule.filteredBoard)
-    const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
     const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
-
+    const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
 
     const [boardToEdit, setBoardToEdit] = useState(board)
     const [isEditingTitle, setIsEditingTitle] = useState(false)
@@ -58,13 +60,12 @@ export function InfoModal() {
 
     function getFormatDate(id) {
         const timestamp = utilService.getCreationTimeFromId(id)
-        const date = new Date(timestamp);
-        const day = date.getDate();
-        const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
-        const year = date.getFullYear();
-        return `${day} ${month}, ${year}`;
+        const date = new Date(timestamp)
+        const day = date.getDate()
+        const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date)
+        const year = date.getFullYear()
+        return `${day} ${month}, ${year}`
     }
-
 
     function onTitelParentHover(txt, name, ref) {
         if (!isEditingTitle) onTooltipParentEnter(isMobile, isOpen, type, txt, name, ref)
@@ -121,10 +122,13 @@ export function InfoModal() {
                     </textarea>
                 </div>
 
-                <a className="flex align-center svg-inherit-color feedback" href="https://mail.google.com/mail/u/0/?fs=1&to=edenrize@gmail.com,mormarzan@gmail.com,noamsaar11@gmail.com&su=Feedback%20on%20Myday&tf=cm" target="_blank">
+                <a className="flex align-center svg-inherit-color feedback"
+                    href="mailto:edenrize@gmail.com?subject=Feedback%20on%20Myday">
+                    {/* href="mailto:edenrize@gmail.com,mormarzan@gmail.com,noamsaar11@gmail.com?subject=Feedback%20on%20Myday"> */}
                     <FeedbackIcon />
                     <p>Give feedback</p>
                 </a>
+
             </div>
 
             <div className="flex column board-data-container">

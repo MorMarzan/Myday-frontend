@@ -5,11 +5,12 @@ import { resetDynamicModal } from "../store/actions/system.actions"
 import { DynamicModalRouter } from "./DynamicModalRouter"
 
 export function DynamicModal() {
-    const modalRef = useRef()
     const modalData = useSelector((storeState) => storeState.systemModule.dynamicModal)
     const [ModalPos, setModalPos] = useState({ left: -500, top: 500 })
-    const [caretDirection, setCaretDirection] = useState('top') // Default direction
     const [caretPos, setCaretPos] = useState('auto') // Default direction
+    const [caretDirection, setCaretDirection] = useState('top') // Default direction
+
+    const modalRef = useRef()
 
     const parentBoundingRect = modalData.parentRefCurrent?.getBoundingClientRect()
 
@@ -94,7 +95,6 @@ export function DynamicModal() {
                 && modalData.parentRefCurrent && !modalData.parentRefCurrent.contains(event.target)
             ) {
                 resetDynamicModal()
-                // console.log('closing by dynamic modal')
             }
         }
 
@@ -120,7 +120,6 @@ export function DynamicModal() {
 
         return rightEdge - leftEdge // Visible width
     }
-
 
     if (!modalData.isOpen) return
 

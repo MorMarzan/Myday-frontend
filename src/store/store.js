@@ -10,16 +10,9 @@ const rootReducer = combineReducers({
     systemModule: systemReducer,
 })
 
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 export const store = createStore(rootReducer, composeEnhancers())
 
-
-// store.subscribe(() => {
-//     console.log('**** Store state changed: ****')
-//     console.log('storeState:\n', store.getState())
-//     console.log('*******************************')
-// })
 
 
 

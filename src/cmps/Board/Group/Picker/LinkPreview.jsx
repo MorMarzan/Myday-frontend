@@ -1,12 +1,15 @@
 import { useSelector } from "react-redux"
 import { useRef } from "react"
-import { resetDynamicModal, setDynamicModal } from "../../../../store/actions/system.actions"
+
 import { CloseIcon } from "../../../../services/svg.service"
 
+import { resetDynamicModal, setDynamicModal } from "../../../../store/actions/system.actions"
+
 export function LinkPreview({ info, onUpdate, taskId }) {
-    const previewBtnRef = useRef(null)
-    const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
     const { parentId } = useSelector((storeState) => storeState.systemModule.dynamicModal)
+    const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
+    const previewBtnRef = useRef(null)
+
     const isLinkPickerOpen = parentId === `${taskId}-linkPicker`
     const isMobileMenuOpen = parentId === `${taskId}-mobile-menu`
 
@@ -50,7 +53,6 @@ export function LinkPreview({ info, onUpdate, taskId }) {
         }
     }
 
-
     const menuOptions = [
         {
             title: 'Open',
@@ -62,6 +64,13 @@ export function LinkPreview({ info, onUpdate, taskId }) {
         },
     ]
 
+    function onLinkClickDynamic() {
+        if (isMobile && info) {
+            onMobileHrefClick()
+        } else {
+            onLinkPreviewClick()
+        }
+    }
 
     let linkContent
 
@@ -72,20 +81,11 @@ export function LinkPreview({ info, onUpdate, taskId }) {
             </p>
         ) : null
     } else {
-
         linkContent = info ? (
             <a className="link-href" target="_blank" href={info.url}>
                 {info.displayTxt || info.url}
             </a>
         ) : null
-    }
-
-    function onLinkClickDynamic() {
-        if (isMobile && info) {
-            onMobileHrefClick()
-        } else {
-            onLinkPreviewClick()
-        }
     }
 
     return (

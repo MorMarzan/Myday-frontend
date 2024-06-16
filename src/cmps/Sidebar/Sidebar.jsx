@@ -2,31 +2,33 @@ import { useSelector } from "react-redux"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router"
 
-import { showErrorMsg, showSuccessMsg } from "../../store/actions/system.actions"
+import { boardService } from "../../services/board.service"
+import { utilService } from "../../services/util.service"
+
+import { resetDynamicModal, showErrorMsg, showSuccessMsg } from "../../store/actions/system.actions"
+import { addBoard, loadBoards, removeBoard, updateBoard } from "../../store/actions/board.actions"
 
 import { SidebarMainNav } from "./SidebarMainNav"
 import { SidebarWorkspace } from "./SidebarWorkspace"
 import { SidebarBoardNav } from "./SidebarBoardNav"
-// import { LottieAnimation } from "./LottieAnimation"
-
-import { addBoard, loadBoards, removeBoard, updateBoard } from "../../store/actions/board.actions"
-import { boardService } from "../../services/board.service"
-import { utilService } from "../../services/util.service"
 
 export function Sidebar() {
-    const sidebarRef = useRef(null)
-
-    const [isResizing, setIsResizing] = useState(false)
-    const [sidebarWidth, setSidebarWidth] = useState(250)
-
     const boards = useSelector((storeState) => storeState.boardModule.boards)
     const currActiveBoard = useSelector((storeState) => storeState.boardModule.currBoard)
     const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-    const [isHovered, setIsHovered] = useState(false)
-    const [filteredBoards, setFilteredBoards] = useState(boards)
+
     const [filterBy, setFilterBy] = useState(boardService.getDefaultBoardsFilter())
+    const [filteredBoards, setFilteredBoards] = useState(boards)
+
+    const [isResizing, setIsResizing] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
+    const [isFavorite, setIsFavorite] = useState(false)
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+
+    const [sidebarWidth, setSidebarWidth] = useState(250)
+
     const navigate = useNavigate()
+    const sidebarRef = useRef(null)
 
     useEffect(() => {
         _loadDataBoards()
@@ -46,24 +48,27 @@ export function Sidebar() {
         }
     }
 
+    function boardsToDisplay(boardsToDisplay) {
+        if (boardsToDisplay === 'all') {
+            setFilteredBoards(boards)
+            setIsFavorite(false)
+        } else if (boardsToDisplay === 'favorites') {
+            const favoriteBoards = boards.filter(board => board.isStarred)
+            setFilteredBoards(favoriteBoards)
+            setIsFavorite(true)
+        }
+        resetDynamicModal()
+    }
+
     function filterBoards() {
         if (filterBy.title) {
             const escapedFilter = utilService.escapeRegExp(filterBy.title)
             const regex = new RegExp(escapedFilter, 'i')
             const newBoards = boards.filter(board => regex.test(board.title))
-            console.log('filterBoards ~ newBoards:', newBoards)
             setFilteredBoards(newBoards)
         } else {
             setFilteredBoards(boards)
         }
-        // if (filterBy.title) {
-        //     const regex = new RegExp(filterBy.title, 'i')
-        //     const newBoards = boards.filter(board => regex.test(board.title))
-        //     setFilteredBoards(newBoards)
-        // } else {
-        //     setFilteredBoards(boards)
-
-        // }
     }
 
     async function onAddNewBoard() {
@@ -79,9 +84,7 @@ export function Sidebar() {
     async function _onRemoveBoard(boardId) {
         try {
             await removeBoard(boardId)
-            // setFilteredBoards(boards)
             showSuccessMsg('We successfully deleted the board')
-            // navigate('board/b101')
         } catch (err) {
             console.log('Error removing board:', err)
 
@@ -110,7 +113,6 @@ export function Sidebar() {
     function onOpenSidebar() {
         if (isSidebarOpen) {
             changeWidthVariable(30)
-            // changeTransitionVariable(0)
         }
 
         else changeWidthVariable(sidebarWidth)
@@ -125,20 +127,9 @@ export function Sidebar() {
         _onRemoveBoard(boardId)
     }
 
-    // resizing functionality
-
-    // const onResize = (newWidth) => {
-    //     setSidebarWidth(newWidth)
-
-    // }
-
     const changeWidthVariable = (newWidth) => {
-        document.documentElement.style.setProperty('--sidebar-width', newWidth + 'px');
+        document.documentElement.style.setProperty('--sidebar-width', newWidth + 'px')
     }
-
-    // const changeTransitionVariable = (length) => {
-    //     document.documentElement.style.setProperty('--layout-transition', length + 'ms');
-    // }
 
     const startResizing = useCallback(() => {
         setIsResizing(true)
@@ -151,19 +142,18 @@ export function Sidebar() {
     const resize = useCallback(
         (ev) => {
             if (isResizing && !isMobile) {
-                let screenWidth = window.innerWidth;
-                let newWidth = ev.clientX - sidebarRef.current.getBoundingClientRect().left;
+                let screenWidth = window.innerWidth
+                let newWidth = ev.clientX - sidebarRef.current.getBoundingClientRect().left
 
                 if (screenWidth >= 905 && screenWidth <= 1055) {
-                    if (newWidth > 250) newWidth = 250;
-                    if (newWidth < 200) newWidth = 200;
+                    if (newWidth > 250) newWidth = 250
+                    if (newWidth < 200) newWidth = 200
                 } else if (screenWidth > 1055) {
-                    if (newWidth > 400) newWidth = 400;
-                    if (newWidth < 200) newWidth = 200;
-                };
+                    if (newWidth > 400) newWidth = 400
+                    if (newWidth < 200) newWidth = 200
+                }
                 setSidebarWidth(newWidth)
                 changeWidthVariable(newWidth)
-                // onResize(newWidth);
             }
         },
         [isResizing]
@@ -178,13 +168,6 @@ export function Sidebar() {
         }
     }, [resize, stopResizing])
 
-    // var style = isSidebarOpen ?
-    //     {
-    //         justifyContent: 'start',
-    //     } : {
-    //         justifyContent: 'end',
-    //     }
-
     var style = !isHovered && !isSidebarOpen ? style : {
         width: sidebarWidth,
         position: 'absolute',
@@ -192,6 +175,8 @@ export function Sidebar() {
     }
 
     const sidebarClass = `sidebar ${isSidebarOpen ? 'open' : ''}`
+    const dynFavoriteClass = isFavorite ? 'favorite' : ''
+
     return (
         <section className="sidebar-container relative" >
             <article
@@ -210,7 +195,10 @@ export function Sidebar() {
                 <SidebarWorkspace
                     filterBy={filterBy}
                     onAddNewBoard={onAddNewBoard}
-                    onSetFilter={onSetFilter} />
+                    onSetFilter={onSetFilter}
+                    boardsToDisplay={boardsToDisplay}
+                    dynFavoriteClass={dynFavoriteClass}
+                />
                 <SidebarBoardNav
                     boards={filteredBoards}
                     currActiveBoard={currActiveBoard}
@@ -219,7 +207,6 @@ export function Sidebar() {
                     filterBy={filterBy}
                 />
                 <div className="app-sidebar-resizer" onMouseDown={startResizing} />
-                {/* <LottieAnimation /> */}
             </article>
         </section >
 

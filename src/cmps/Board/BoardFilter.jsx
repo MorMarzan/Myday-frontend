@@ -1,29 +1,38 @@
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 
-import { addTask, getMemberFromBoard } from "../../store/actions/board.actions"
-import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal, setDynamicDialog, setDynamicModal, setDynamicModalData, showErrorMsg } from "../../store/actions/system.actions"
+import { boardService } from "../../services/board.service"
 
-import { CloseFilledIcon, FilterIcon, HideIcon, PersonIcon, PlusIcon, RobotIcon, SearchIcon, SettingsKnobsIcon, SortIcon } from "../../services/svg.service"
+import { addTask, getMemberFromBoard } from "../../store/actions/board.actions"
+import {
+    onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal,
+    setDynamicDialog, setDynamicModal, setDynamicModalData, showErrorMsg
+} from "../../store/actions/system.actions"
+
+import {
+    CloseFilledIcon, PersonIcon, PlusIcon, RobotIcon,
+    SearchIcon, SettingsKnobsIcon, SortIcon
+} from "../../services/svg.service"
+
 import { UserImg } from "../UserImg"
 import { DynamicInput } from "../DynamicInput"
 import { AutomationModal } from "./AutomationModal"
-import { boardService } from "../../services/board.service"
 
 export function BoardFilter({ board, filterBy, onSetFilter }) {
-    const filterSearchRef = useRef(null)
-    const personBtnRef = useRef(null)
-    const sortBtnRef = useRef(null)
+    const sortBy = useSelector((storeState) => storeState.boardModule.sortBy)
+    const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
+    const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
 
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
     const [isFocused, setIsFocused] = useState(false)
 
-    const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
-    const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
+    const filterSearchRef = useRef(null)
+    const personBtnRef = useRef(null)
+    const sortBtnRef = useRef(null)
+
     const isMemberPickerOpen = parentId === `${board._id}-memberFilterPicker`
     const isSortPickerOpen = parentId === `${board._id}-sortPicker`
 
-    const sortBy = useSelector(storeState => storeState.boardModule.sortBy)
     const isIntialSortEmpty = JSON.stringify(sortBy) === JSON.stringify(boardService.getDefaultSort())
 
     useEffect(() => {
@@ -75,7 +84,7 @@ export function BoardFilter({ board, filterBy, onSetFilter }) {
         }
     }
 
-    function toggleSortPicker(ev) {
+    function toggleSortPicker() {
         if (isSortPickerOpen) {
             resetDynamicModal()
         } else {
@@ -185,7 +194,6 @@ export function BoardFilter({ board, filterBy, onSetFilter }) {
 
             <button
                 className={` btn ${filterByToEdit.member || isMemberPickerOpen ? 'active' : ''} person`}
-                // title="Filter by person"
                 onClick={toggleMemberFilter}
                 ref={personBtnRef}
                 onMouseEnter={() => onTooltipParentEnter(isMobile, isOpen, type, 'Filter by person', 'person-filter-title', personBtnRef)}

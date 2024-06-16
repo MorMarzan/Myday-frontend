@@ -1,5 +1,5 @@
 
-import { ActivityPreview } from "./ActivityPreview.jsx";
+import { ActivityPreview } from "./ActivityPreview.jsx"
 
 export function ActivityList({ activities }) {
     const sortedActivities = [...activities].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))

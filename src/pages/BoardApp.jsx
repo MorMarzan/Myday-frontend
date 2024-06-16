@@ -1,16 +1,13 @@
-import { Outlet } from "react-router";
-import { useSelector } from "react-redux";
+import { Outlet } from "react-router"
+import { useSelector } from "react-redux"
 
-import { Sidebar } from "../cmps/Sidebar/Sidebar";
-import { DynamicModal } from "../cmps/DynamicModal";
-import { BoardAppHeader } from "../cmps/BoardAppHeader";
-import { DynamicDialog } from "../cmps/DynamicDialog";
-
-
+import { Sidebar } from "../cmps/Sidebar/Sidebar"
+import { DynamicModal } from "../cmps/DynamicModal"
+import { BoardAppHeader } from "../cmps/BoardAppHeader"
+import { DynamicDialog } from "../cmps/DynamicDialog"
 
 export function BoardApp() {
     const isFullSidebarMobile = useSelector((storeState) => storeState.systemModule.isFullSidebarMobile)
-
 
     return (
         <section className="main-layout grid board-app">

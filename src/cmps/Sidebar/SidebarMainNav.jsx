@@ -1,9 +1,11 @@
-import { NavLink } from "react-router-dom"
-import { HomeIcon, AngleRightIcon, CalendarIcon } from "../../services/svg.service"
-import { setCurrBoard } from "../../store/actions/board.actions"
 import { useRef } from "react"
 import { useSelector } from "react-redux"
-import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal, setDynamicModal, setIsFullSidebarMobile } from "../../store/actions/system.actions"
+import { NavLink } from "react-router-dom"
+
+import { setCurrBoard } from "../../store/actions/board.actions"
+import { onTooltipParentEnter, onTooltipParentLeave, setIsFullSidebarMobile } from "../../store/actions/system.actions"
+
+import { HomeIcon, AngleRightIcon, CalendarIcon } from "../../services/svg.service"
 
 export function SidebarMainNav({ isSidebarOpen, onOpenSidebar, changeWidthVariable }) {
     const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)

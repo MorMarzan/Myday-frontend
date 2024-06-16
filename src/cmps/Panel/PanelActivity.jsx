@@ -1,4 +1,4 @@
-import { ActivityList } from "./ActivityList";
+import { ActivityList } from "./ActivityList"
 
 export function PanelActivity({ activities }) {
     return (

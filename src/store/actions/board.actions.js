@@ -1,33 +1,14 @@
-import { boardService } from '../../services/board.service.js'
-// import { boardService } from '../../services/board.service.local.js'
-// import { userService } from '../services/user.service.js'
 import { store } from '../store.js'
-// import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-import { ADD_BOARD, REMOVE_BOARD, SET_CURR_BOARD, SET_BOARDS, SET_IS_HEADER_COLLAPSED, UPDATE_BOARD, SET_FILTER_BY, SET_ACTIVE_TASK, SET_FILTERED_BOARD, UPDATE_TASK, SET_BOARD_ACTIVITIES, SET_SORT_BY } from '../reducers/board.reducer.js'
-import { setIsLoading } from './system.actions.js'
+import { boardService } from '../../services/board.service.js'
 import { utilService } from '../../services/util.service.js'
+import { setIsLoading } from './system.actions.js'
 import { activityService } from '../../services/activity.service.js'
-
-
-// Store - saveTask (from board.js)
-// function storeSaveTask(boardId, groupId, task, activity) {
-
-//     board = boardService.saveTask(boardId, groupId, task, activity)
-//     // commit(ACTION) // dispatch(ACTION)
-// }
-
-// function updateTask(cmpType, data) {
-// Switch by cmpType
-// case MEMBERS:
-//    task.members = data
-//    activity = boardService.getEmptyActivity()
-//    activity.txt = `Members changed for task ${}`
-//    activity.task = '{mini-task}'
-// case STATUS:
-//    task.status = data
-
-// dispatch to store: updateTask(task, activity)
-// }
+import {
+    ADD_BOARD, REMOVE_BOARD, SET_CURR_BOARD, SET_BOARDS,
+    SET_IS_HEADER_COLLAPSED, UPDATE_BOARD, SET_FILTER_BY,
+    SET_ACTIVE_TASK, SET_FILTERED_BOARD, UPDATE_TASK,
+    SET_BOARD_ACTIVITIES, SET_SORT_BY
+} from '../reducers/board.reducer.js'
 
 /**************** board actions ****************/
 

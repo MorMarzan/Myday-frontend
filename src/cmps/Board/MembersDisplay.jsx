@@ -13,7 +13,7 @@ export function MembersDisplay({ members }) {
     )
 
     return (
-        <div className="members-display">
+        <div className="members-display flex">
             {!members.length &&
                 <img className="user-img"
                     src="https://res.cloudinary.com/dkvliixzt/image/upload/v1704358773/person-empty_zckbtr_wrffbw.svg"

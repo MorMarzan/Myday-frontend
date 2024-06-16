@@ -175,11 +175,6 @@ export function HomePage() {
                 <h2>Deliver your best work <span>with myday.com</span></h2>
                 <p>No credit card needed   <span>✦</span>   Unlimited time on Free plan</p>
                 <GetStartedBtn />
-                {/* <button className="btn-footer-get-started" onClick={() => navigate('/board/workspace')}>
-                    <span className="get-started-txt">Get Started</span>
-                    <ArrowRightIcon />
-                </button> */}
-
             </section>
         </section >
     )

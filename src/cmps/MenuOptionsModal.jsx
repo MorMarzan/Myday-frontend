@@ -1,6 +1,5 @@
 
 export function MenuOptionsModal({ options }) {
-
     return (
         <div className="general-modal menu-option-modal">
             {options.map((option, idx) => {

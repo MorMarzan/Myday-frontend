@@ -8,7 +8,7 @@ export const REMOVE_USER = 'REMOVE_USER'
 export const SET_USERS = 'SET_USERS'
 
 const initialState = {
-    count: 10,
+    // count: 10,
     user: userService.getLoggedinUser(),
     users: [],
     watchedUser: null
@@ -44,8 +44,5 @@ export function userReducer(state = initialState, action) {
             break
         default:
     }
-    // For debug:
-    // window.userState = newState
-    // console.log('State:', newState)
     return newState
 }

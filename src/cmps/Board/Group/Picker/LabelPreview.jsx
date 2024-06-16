@@ -5,17 +5,16 @@ import { setDynamicModal, resetDynamicModal } from "../../../../store/actions/sy
 import { utilService } from "../../../../services/util.service"
 
 export function LabelPreview({ title, info, onUpdate, taskId, isChangingToDone }) {
-    const previewBtnRef = useRef(null)
-    const [animationClass, setAnimationClass] = useState('');
-    const animations = ['balloon', 'confetti', 'crazy_balls']
-
     const board = useSelector((storeState) => storeState.boardModule.filteredBoard)
     const { parentId } = useSelector((storeState) => storeState.systemModule.dynamicModal)
 
+    const [animationClass, setAnimationClass] = useState('')
+    const previewBtnRef = useRef(null)
+
+    const animations = ['balloon', 'confetti', 'crazy_balls']
+
     const label = board[title].find(option => option.id === info.chosenOption)
     if (!label) return <li className="status-preview status-col priority-col">Loading...</li>
-    const style = { backgroundColor: label.color }
-    const isCurrPickerOpen = parentId === `${taskId}-${title}Picker`
 
 
     useEffect(() => {
@@ -27,7 +26,9 @@ export function LabelPreview({ title, info, onUpdate, taskId, isChangingToDone }
         }
     }, [isChangingToDone, label.id])
 
-    function onLabelPreviewClick(ev) {
+    const isCurrPickerOpen = parentId === `${taskId}-${title}Picker`
+
+    function onLabelPreviewClick() {
         if (isCurrPickerOpen) {
             resetDynamicModal()
         } else {
@@ -44,6 +45,8 @@ export function LabelPreview({ title, info, onUpdate, taskId, isChangingToDone }
             })
         }
     }
+
+    const style = { backgroundColor: label.color }
 
     return (
         <li

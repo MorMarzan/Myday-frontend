@@ -1,6 +1,11 @@
 import { useEffect, useRef } from "react"
 
-export function EditableTxt({ isEditing, txtValue, onTxtClick, inputValue, inputName = '', placeholder = '', onInputChange, onEditClose, extraBtnsStart, extraBtnsEnd, style = {}, isBtnsInTxt }) {
+export function EditableTxt({
+    isEditing, txtValue, onTxtClick,
+    inputValue, inputName = '', placeholder = '',
+    onInputChange, onEditClose, extraBtnsStart,
+    extraBtnsEnd, style = {}, isBtnsInTxt
+}) {
     const editableTxtRef = useRef(null)
 
     useEffect(() => {

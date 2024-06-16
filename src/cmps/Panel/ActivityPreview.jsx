@@ -1,11 +1,18 @@
 import { useSelector } from "react-redux"
-import { ActivityCalendarIcon, ClockIcon, CreateIcon, LinkIcon, BlackPencilIcon, PersonIcon, TitleIcon, VerticalLogoIcon, PencilIcon, DeleteIcon } from "../../services/svg.service"
+
 import { utilService } from "../../services/util.service"
+
+import {
+    ActivityCalendarIcon, ClockIcon, CreateIcon, LinkIcon,
+    PersonIcon, TitleIcon, VerticalLogoIcon, PencilIcon, DeleteIcon
+} from "../../services/svg.service"
+
 import { UserImg } from "../UserImg"
 import { ActivityStatus } from "./ActivityStatus"
 
 export function ActivityPreview({ activity }) {
     const currBoard = useSelector(state => state.boardModule.currBoard)
+
     const statuses = currBoard.status
     const priorities = currBoard.priority
     const members = currBoard.members

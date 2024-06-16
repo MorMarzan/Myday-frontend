@@ -1,6 +1,6 @@
-import { AngleRightIcon } from "../../services/svg.service";
-import { utilService } from "../../services/util.service";
-import { UserImg } from "../UserImg";
+import { AngleRightIcon } from "../../services/svg.service"
+import { utilService } from "../../services/util.service"
+import { UserImg } from "../UserImg"
 
 export function ActivityStatus({ type, fromStatus, toStatus, activityTitle = null }) {
     function getTitle(type, title) {
@@ -32,24 +32,6 @@ export function ActivityStatus({ type, fromStatus, toStatus, activityTitle = nul
                         {activityTitle}
                     </div>
                 </div>
-            // case 'Timeline':
-            //     if (!title || title === '-') return <div className="activity-timeline-container">
-            //         <Text style={{ color: 'white' }} ellipsis>
-            //             -
-            //         </Text>
-            //     </div>
-            //     return <div className="activity-timeline-container" style={{ backgroundColor: 'rgb(2, 134, 195)' }}>
-            //         <Text style={{ color: 'white' }} ellipsis>
-            //             {utilService.getTimelineRange(title)}
-            //         </Text>
-            //     </div>
-            // case 'Favorite':
-            //     if (!title || title === '-') return '-'
-            //     return 'Added'
-            // case 'Comment':
-            //     if (!title || title === '-') return '-'
-            //     idx = (title.length > 0) ? 0 : (title.length - 1)
-            //     return title[idx]?.txt ? title[idx].txt : '-'
             default:
                 return type
         }

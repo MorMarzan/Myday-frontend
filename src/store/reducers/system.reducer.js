@@ -31,11 +31,10 @@ const initialState = {
   },
   isFullSidebarMobile: true,
   isMobile: window.innerWidth <= 905,
-  isIncompatibleBrowser: navigator.userAgent.includes("SamsungBrowser")
+  // isIncompatibleBrowser: navigator.userAgent.includes("SamsungBrowser")
 }
 
 export function systemReducer(state = initialState, action = {}) {
-  // console.log('action:', action)
   switch (action.type) {
     case SET_IS_LOADING:
       return { ...state, isLoading: action.isLoading }

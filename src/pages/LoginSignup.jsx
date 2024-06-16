@@ -1,23 +1,25 @@
-import { useState } from 'react'
-import HoltCatImg from '/img/welcome-to-monday.avif'
-import { DynamicInput } from '../cmps/DynamicInput'
-import { userService } from '../services/user.service'
-import { uploadService } from '../services/upload.service'
-import { UserImg } from '../cmps/UserImg'
-import { setIsLoading, showErrorMsg } from '../store/actions/system.actions'
-import { useNavigate, useParams } from 'react-router'
-import { login, signup } from '../store/actions/user.actions'
+import { useState } from "react"
+import { useNavigate, useParams } from "react-router"
+
+import { userService } from "../services/user.service"
+
+import { setIsLoading, showErrorMsg } from "../store/actions/system.actions"
+import { login, signup } from "../store/actions/user.actions"
+
+import { uploadService } from "../services/upload.service"
+import { DynamicInput } from "../cmps/DynamicInput"
+import { UserImg } from "../cmps/UserImg"
+import HoltCatImg from "/img/welcome-to-monday.avif"
 
 export function LoginSignup() {
-    // const [isLogin, setIsLogin] = useState(false)
     const [user, setUser] = useState(userService.getEmptyUser())
-    const navigate = useNavigate()
     const { navLocation } = useParams()
+    const navigate = useNavigate()
+
     const isLogin = navLocation === 'login'
 
     function toggleLogin(navLocation) {
         navigate(`/auth/${navLocation}`)
-        // setIsLogin(prevLogin => !prevLogin)
     }
 
     function handleChange({ target }) {
@@ -140,7 +142,6 @@ export function LoginSignup() {
                 <div className='notice-navigation'>
                     {noticeContent}
                 </div>
-
             </div>
 
             <div className="img-container">

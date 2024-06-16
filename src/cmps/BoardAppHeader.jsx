@@ -1,19 +1,19 @@
 import { useRef, useState } from "react"
 import { useSelector } from "react-redux"
 
-import { resetDynamicModal, setDynamicDialog, setDynamicModal, showErrorMsg, showSuccessMsg } from "../store/actions/system.actions.js"
+import { resetDynamicModal, setDynamicDialog, setDynamicModal, showErrorMsg } from "../store/actions/system.actions.js"
 import { logout } from "../store/actions/user.actions.js"
 
-import { LogoIcon, LoginIcon, InviteIcon, AboutUsIcon } from "../services/svg.service.jsx"
+import { LoginIcon, InviteIcon, AboutUsIcon } from "../services/svg.service.jsx"
 import { UserImg } from "./UserImg.jsx"
 import { useNavigate } from "react-router"
 import { AboutUs } from "./AboutUs.jsx"
 
 export function BoardAppHeader() {
-    const menuBtnRef = useRef(null)
-    var user = useSelector(storeState => storeState.userModule.user)
+    var user = useSelector((storeState) => storeState.userModule.user)
     const { parentId } = useSelector((storeState) => storeState.systemModule.dynamicModal)
-    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const menuBtnRef = useRef(null)
     const navigate = useNavigate()
 
     const isMenuOpen = parentId === `user-auth-menu`
@@ -33,7 +33,7 @@ export function BoardAppHeader() {
         }
     }
 
-    function toggleMenu(ev) {
+    function toggleMenu() {
         if (isMenuOpen) {
             resetDynamicModal()
         } else {

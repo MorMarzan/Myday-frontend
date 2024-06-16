@@ -11,13 +11,8 @@ export function PanelUpdate({ msgs, onAddUpdate }) {
     const { taskId } = useParams()
 
     const [updateTxt, setUpdateText] = useState('')
-    // const [currMsgs, setCurrMsgs] = useState(msgs)
 
     const inputRef = useRef(null)
-
-    // useEffect(() => {
-    //     setCurrMsgs(msgs)
-    // }, [msgs])
 
     useEffect(() => {
         socketService.on(SOCKET_EVENT_ADD_MSG, addMsg) //listen to other people msgs
@@ -33,7 +28,6 @@ export function PanelUpdate({ msgs, onAddUpdate }) {
     function addMsg(newMsg) {
         console.log(newMsg)
         addMgs(taskId, newMsg)
-        // setCurrMsgs(prevMsgs => [newMsg, ...prevMsgs])
     }
 
     function handleSubmit(ev) {
@@ -48,27 +42,6 @@ export function PanelUpdate({ msgs, onAddUpdate }) {
         }
     }
 
-    // function toggleMenu(ev) {
-    //     ev.stopPropagation()
-
-    //     if (isMenuOpen) {
-    //         resetDynamicModal()
-    //     } else {
-    //         setDynamicModal({
-    //             isOpen: true,
-    //             parentRefCurrent: menuBtnRef.current,
-    //             parentId: `${boardId}-sidebar-menu`,
-    //             type: 'menuOptions',
-    //             data: { options: menuOptions },
-    //             isPosBlock: true
-    //         })
-    //     }
-    // }
-
-    function onLikeComment() {
-
-    }
-
     const dynClass = inputRef.current?.value ? 'contains-txt' : ''
 
     if (!msgs) {
@@ -78,7 +51,6 @@ export function PanelUpdate({ msgs, onAddUpdate }) {
             </section>
         )
     }
-
 
     return (
         <section className="panel-update grid">
@@ -100,7 +72,8 @@ export function PanelUpdate({ msgs, onAddUpdate }) {
             </div>
 
             {msgs.length ?
-                <MsgList msgs={msgs} onLikeComment={onLikeComment} />
+                // <MsgList msgs={msgs} onLikeComment={onLikeComment} />
+                <MsgList msgs={msgs} />
                 : (
                     <div className="post-not-found grid place-center">
                         <img src="/img/no-updates.svg" alt="" />

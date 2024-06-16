@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react"
-import { UserImg } from "../UserImg"
-import { ClockIcon, LikeIcon, PersonIcon, ReplyIcon } from "../../services/svg.service"
+
 import { utilService } from "../../services/util.service"
+
 import { getUserById } from "../../store/actions/user.actions"
 
-export function MsgList({ msgs, onLikeComment }) {
+import { UserImg } from "../UserImg"
+import { ClockIcon, PersonIcon } from "../../services/svg.service"
+
+export function MsgList({ msgs }) {
 
     const [currMsgs, setCurrMsgs] = useState(null)
 

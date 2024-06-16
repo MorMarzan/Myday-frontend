@@ -1,17 +1,18 @@
+import { useState } from "react"
+import { useSelector } from "react-redux"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import { BoardGroup } from "./BoardGroup";
-import { useRef, useState } from "react";
-import { updateBoardOrder } from "../../../store/actions/board.actions";
-import { useSelector } from "react-redux";
 
+import { updateBoardOrder } from "../../../store/actions/board.actions"
+
+import { BigPlusIcon } from "../../../services/svg.service"
+import { BoardGroup } from "./BoardGroup"
 import emptySearch from "/img/search-empty.svg"
-import { BigPlusIcon } from "../../../services/svg.service";
 
 
 export function GroupList({ board, isFocusLastGroup, onSetIsFocusLastGroup, scrollTop, onAddGrop }) {
-    const [isGroupsCollapsed, setIsGroupsCollapsed] = useState(false)
     const isHeaderCollapsed = useSelector((storeState) => storeState.boardModule.isHeaderCollapsed)
     const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
+    const [isGroupsCollapsed, setIsGroupsCollapsed] = useState(false)
 
     const handleDragEnd = (result) => {
         setIsGroupsCollapsed(false)
@@ -29,15 +30,12 @@ export function GroupList({ board, isFocusLastGroup, onSetIsFocusLastGroup, scro
             await updateBoardOrder(boardToSave)
         } catch (err) {
             console.log('Cannot save board:', err)
-            // showErrorMsg('Cannot save group')
         }
     }
-
 
     function onBeforeDragStart() {
         setIsGroupsCollapsed(true)
     }
-
 
     function getScrollTopClass(idx) {
         const groupEl = document.querySelector(`.group-${idx}`)
@@ -84,14 +82,12 @@ export function GroupList({ board, isFocusLastGroup, onSetIsFocusLastGroup, scro
                                 board.groups.map((group, idx) => (
                                     <div className={`${getScrollTopClass(idx)} group-container group-${idx}`} key={group.id}>
                                         <Draggable draggableId={group.id} index={idx} >
-                                            {(provided, snapshot) => (
+                                            {(provided) => (
                                                 <div
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}
                                                     {...provided.dragHandleProps}
-
                                                 >
-
                                                     <BoardGroup
                                                         key={group.id}
                                                         group={group}

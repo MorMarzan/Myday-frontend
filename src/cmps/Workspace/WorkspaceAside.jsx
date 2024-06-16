@@ -1,7 +1,6 @@
 import TemplatesBanner from "/img/templates-banner.png"
 import GetStarted from "/img/get-started-2.svg"
 import HelpCenter from "/img/help-center.svg"
-import Webinars from "/img/webinars.svg"
 
 export function WorkspaceAside() {
     return (
@@ -14,7 +13,6 @@ export function WorkspaceAside() {
                         Boost your workflow in minutes with ready-made templates
                     </p>
 
-                    {/* <button className="banner-button">Explore templates</button> */}
                 </div>
             </section>
 
@@ -53,22 +51,6 @@ export function WorkspaceAside() {
                     </div>
 
                 </div>
-                {/* 
-                <div className="navigation-card-component">
-
-                    <img src={Webinars} alt="" />
-
-                    <div className="card-content">
-                        <p className="card-title">
-                            Join a webinar
-                        </p>
-
-                        <p className="card-text">
-                            Watch a live walkthrough
-                        </p>
-                    </div>
-
-                </div> */}
             </section>
         </section>
     )

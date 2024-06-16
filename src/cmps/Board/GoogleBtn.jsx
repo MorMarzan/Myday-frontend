@@ -1,4 +1,4 @@
-import { GoogleIcon } from "../../services/svg.service";
+import { GoogleIcon } from "../../services/svg.service"
 
 export function GoogleBtn({ onBtnClick, txt }) {
     return (

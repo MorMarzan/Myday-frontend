@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react"
+import { useSelector } from "react-redux"
 
 import { setMsg } from "../store/actions/system.actions.js"
-import { useSelector } from "react-redux"
 import { CheckIcon, CloseIcon } from "../services/svg.service.jsx"
-
-// import { socketService, SOCKET_EVENT_REVIEW_ABOUT_YOU } from "../services/socket.service.js"
 
 export function UserMsg() {
   const msg = useSelector((storeState) => storeState.systemModule.msg)

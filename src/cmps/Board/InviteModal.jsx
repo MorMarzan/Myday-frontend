@@ -1,40 +1,24 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-// import { getUsers } from "../../store/actions/user.actions"
-import { MemberList } from "../MemberList"
-import { CloseIcon, SearchIcon } from "../../services/svg.service"
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate"
-import { DynamicInput } from "../DynamicInput"
+
 import { updateBoard } from "../../store/actions/board.actions"
 import { showErrorMsg, showSuccessMsg } from "../../store/actions/system.actions"
 
-export function InviteModal({ board, onCloseDialog }) {
-    var users = useSelector(storeState => storeState.userModule.users)
+import { CloseIcon, SearchIcon } from "../../services/svg.service"
+import { MemberList } from "../MemberList"
+import { DynamicInput } from "../DynamicInput"
 
-    // const [users, setUsers] = useState(null)
+export function InviteModal({ board, onCloseDialog }) {
+    var users = useSelector((storeState) => storeState.userModule.users)
     const [filteredUsers, setFilteredUsers] = useState(null)
     const [usersFilter, setUsersFilter] = useState('')
+
     const boardMembers = board.members
 
     useEffect(() => {
-
         const usersToShow = getUsersToShow(users)
         setFilteredUsers(usersToShow || [])
-
-        // const fetchData = async () => {
-        //     try {
-        //         const usersFromDb = await getUsers()
-        //         setUsers(usersFromDb || [])
-
-        //         const usersToShow = getUsersToShow(usersFromDb)
-        //         setFilteredUsers(usersToShow || [])
-        //     } catch (error) {
-        //         console.error("Error fetching data:", error)
-        //     }
-        // }
-
-        // fetchData()
-
     }, [boardMembers])
 
     useEffectUpdate(() => {
@@ -98,8 +82,8 @@ export function InviteModal({ board, onCloseDialog }) {
                 <DynamicInput inputProps={inputProps} />
                 <button className="btn close-btn" onClick={onCloseDialog}><CloseIcon /></button>
             </div>
-            <MemberList members={filteredUsers} onMemberClick={onUserSelect} />
 
+            <MemberList members={filteredUsers} onMemberClick={onUserSelect} />
         </div>
     )
 }

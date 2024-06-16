@@ -6,11 +6,16 @@ export function SidebarWorkspace(
         filterBy,
         onSetFilter,
         onAddNewBoard,
+        boardsToDisplay,
+        dynFavoriteClass
     }) {
 
     return (
         <section className="sidebar-workspace">
-            <SidebarWorkspaceNav />
+            <SidebarWorkspaceNav
+                boardsToDisplay={boardsToDisplay}
+                dynFavoriteClass={dynFavoriteClass}
+            />
             <SidebarFilter
                 filterBy={filterBy}
                 onAddNewBoard={onAddNewBoard}

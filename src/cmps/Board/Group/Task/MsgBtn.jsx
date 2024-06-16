@@ -1,4 +1,4 @@
-import { AddMsgIcon, MsgIcon } from "../../../../services/svg.service";
+import { AddMsgIcon, MsgIcon } from "../../../../services/svg.service"
 
 export function MsgBtn({ msgsLength }) {
     return (

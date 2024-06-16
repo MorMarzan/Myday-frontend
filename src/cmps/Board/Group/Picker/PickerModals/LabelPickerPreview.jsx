@@ -1,16 +1,19 @@
 import { useEffect, useRef, useState } from "react"
-import { getBoardColors } from "../../../../../store/actions/board.actions"
-import { EditableTxt } from "../../../../EditableTxt"
-import { ColorPicker } from "./ColorPicker"
+
 import { CloseIcon } from "../../../../../services/svg.service"
 
-export function LabelPickerPreview({ label, isEditing, handleChange, onLabelsChange, onRemoveLabel }) {
-    const colorBtnParentRef = useRef(null)
+import { getBoardColors } from "../../../../../store/actions/board.actions"
 
-    const [isEditingLabel, setIsEditingLabel] = useState(false)
+import { EditableTxt } from "../../../../EditableTxt"
+import { ColorPicker } from "./ColorPicker"
+
+export function LabelPickerPreview({ label, isEditing, handleChange, onLabelsChange, onRemoveLabel }) {
     const [labelTitle, setLabelTitle] = useState(label.title)
     const [labelColor, setLabelColor] = useState(label.color)
+    const [isEditingLabel, setIsEditingLabel] = useState(false)
     const [isColorPickerOpen, setIsColorPickerOpen] = useState(false)
+
+    const colorBtnParentRef = useRef(null)
 
     const colors = getBoardColors()
     const isDefault = label.id === 'l100' || label.id === 'l200'
@@ -29,7 +32,6 @@ export function LabelPickerPreview({ label, isEditing, handleChange, onLabelsCha
         setLabelColor(color)
         setIsColorPickerOpen(false)
         onLabelsChange({ ...label, title: labelTitle, color: color })
-        // setIsEditingLabel(false)
     }
 
     function onColorDisplayClick(ev) {

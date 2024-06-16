@@ -1,32 +1,30 @@
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
+import { useNavigate } from "react-router"
 import { useEffectUpdate } from "../../../../customHooks/useEffectUpdate"
 import { useSession } from '@supabase/auth-helpers-react'
 import emailjs from '@emailjs/browser'
 
+import { activityService } from "../../../../services/activity.service"
+import { utilService } from "../../../../services/util.service"
+
 import { getMembersFromBoard, removeTask, updateTask } from "../../../../store/actions/board.actions"
-import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal, setDynamicModal, setDynamicModalData, setSidePanelOpen, showErrorMsg, showSuccessMsg } from "../../../../store/actions/system.actions"
+import {
+    onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal,
+    setDynamicModal, setDynamicModalData, setSidePanelOpen, showErrorMsg, showSuccessMsg
+} from "../../../../store/actions/system.actions"
 
 import { DeleteIcon, MenuIcon, OpenIcon } from "../../../../services/svg.service"
 import { DynamicPreview } from "../Picker/DynamicPreview"
 import { EditableTxt } from "../../../EditableTxt"
-import { useNavigate } from "react-router"
 import { MsgBtn } from "./MsgBtn"
-import { activityService } from "../../../../services/activity.service"
-import { utilService } from "../../../../services/util.service"
+import { HighlightText } from "../../../HighlightText"
 
-export function TaskPreview({ task, groupId, groupColor, onSetActiveTask, highlightText, filterBy }) {
-    const menuBtnRef = useRef(null)
-    const openDetailsBtnRef = useRef(null)
-    const msgsBtnRef = useRef(null)
-
-    const navigate = useNavigate()
-    const session = useSession() //tokens, when session exists we have a user
-
+export function TaskPreview({ task, groupId, groupColor, onSetActiveTask, filterBy }) {
     const board = useSelector((storeState) => storeState.boardModule.filteredBoard)
     const activeTask = useSelector((storeState) => storeState.boardModule.activeTask)
+    const loggedInUser = useSelector((storeState) => storeState.userModule.user)
     const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
-    const loggedInUser = useSelector(storeState => storeState.userModule.user)
     const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
 
     const [isChangingToDone, setIsChangingToDone] = useState(false)
@@ -35,6 +33,12 @@ export function TaskPreview({ task, groupId, groupColor, onSetActiveTask, highli
     const [isShowMenuBtn, setIsShowMenuBtn] = useState(false)
     const [isShowTaskDetailsBtn, setIsShowTaskDetailsBtn] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
+
+    const menuBtnRef = useRef(null)
+    const openDetailsBtnRef = useRef(null)
+
+    const navigate = useNavigate()
+    const session = useSession() //tokens, when session exists we have a user
 
     const isMenuOpen = parentId === `${task.id}-menu`
     const isActive = currTask ? activeTask === currTask.id : false
@@ -56,12 +60,6 @@ export function TaskPreview({ task, groupId, groupColor, onSetActiveTask, highli
         try {
             let data = recivedData
             if (field === 'members') data = data.map(member => member._id)
-            if (field[0] === 'status' && recivedData === 'l101') {
-                setIsChangingToDone(true)
-                setTimeout(() => {
-                    setIsChangingToDone(false)
-                }, 3000)
-            }
 
             if (field !== 'members' && field !== 'link') resetDynamicModal()
 
@@ -89,7 +87,14 @@ export function TaskPreview({ task, groupId, groupColor, onSetActiveTask, highli
                 data: NewFieldTitle
             }
             const updatedTask = { ...task, members: task.members, [field]: data }
-            updateTask(board._id, groupId, updatedTask, prevState, newState)
+            await updateTask(board._id, groupId, updatedTask, prevState, newState)
+
+            if (field[0] === 'status' && recivedData === 'l101') {
+                setIsChangingToDone(true)
+                setTimeout(() => {
+                    setIsChangingToDone(false)
+                }, 3000)
+            }
 
             const isAutomate = (loggedInUser &&
                 loggedInUser.automations &&
@@ -178,7 +183,7 @@ export function TaskPreview({ task, groupId, groupColor, onSetActiveTask, highli
         if (!isMenuOpen) setIsShowMenuBtn(false)
     }
 
-    function toggleMenu(ev) {
+    function toggleMenu() {
         if (isMenuOpen) {
             resetDynamicModal()
         } else {
@@ -287,13 +292,8 @@ export function TaskPreview({ task, groupId, groupColor, onSetActiveTask, highli
                     <div className="checkbox"></div>
                 </li>
 
-                <li className="task-title single-task"
-                >
-
-                    <div className="flex align-center open-details-container">
-
-                    </div>
-
+                <li className="task-title single-task">
+                    <div className="flex align-center open-details-container"></div>
                 </li>
             </ul>
         </div>
@@ -341,7 +341,7 @@ export function TaskPreview({ task, groupId, groupColor, onSetActiveTask, highli
 
                         <EditableTxt
                             isEditing={isEditing}
-                            txtValue={highlightText(taskTitle, filterBy.txt)}
+                            txtValue={<HighlightText text={taskTitle} query={filterBy.txt} />}
                             onTxtClick={onTitleClick}
                             inputValue={taskTitle}
                             onInputChange={onChangeTitle}

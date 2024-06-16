@@ -1,15 +1,17 @@
 import { useSelector } from 'react-redux'
-import { PencilIcon } from '../../../../../services/svg.service'
-import { LabelList } from './LabelList'
 import { useState } from 'react'
+
+import { PencilIcon } from '../../../../../services/svg.service'
+import { boardService } from '../../../../../services/board.service'
+
 import { updateBoard } from '../../../../../store/actions/board.actions'
 import { showErrorMsg } from '../../../../../store/actions/system.actions'
-import { boardService } from '../../../../../services/board.service'
+
+import { LabelList } from './LabelList'
 
 export function LabelPicker({ onChangeStatus, title }) {
     const board = useSelector((storeState) => storeState.boardModule.filteredBoard)
-    const labels = board[title]
-    const [currLabels, setCurrLabels] = useState(labels)
+    const [currLabels, setCurrLabels] = useState(board[title])
     const [isEditing, setIsEditing] = useState(false)
 
     function handleChange(newStatus) {
@@ -89,8 +91,14 @@ export function LabelPicker({ onChangeStatus, title }) {
 
     return (
         <div className="general-modal flex column align-center justify-center status-picker-modal">
-
-            <LabelList labels={currLabels} handleChange={handleChange} isEditing={isEditing} onLabelsChange={onLabelsChange} onAddLabel={onAddLabel} onRemoveLabel={onRemoveLabel} />
+            <LabelList
+                labels={currLabels}
+                handleChange={handleChange}
+                isEditing={isEditing}
+                onLabelsChange={onLabelsChange}
+                onAddLabel={onAddLabel}
+                onRemoveLabel={onRemoveLabel}
+            />
 
             <button className='btn flex align-center justify-center edit-btn' onClick={onEditBtnClick}>
                 {!isEditing && <PencilIcon />}

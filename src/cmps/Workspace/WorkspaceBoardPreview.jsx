@@ -1,11 +1,13 @@
-import { useNavigate } from "react-router";
-import { BoardIcon } from "../../services/svg.service";
+import { useNavigate } from "react-router"
+import { useEffect, useState } from "react"
+import { useEffectUpdate } from "../../customHooks/useEffectUpdate"
+
+import { updateBoard } from "../../store/actions/board.actions"
+import { setDynamicModalData, showErrorMsg } from "../../store/actions/system.actions"
+
 import workspaceBoardPreview from "/img/workspace-board-preview.svg"
-import { Star } from "../Board/Star";
-import { useEffect, useState } from "react";
-import { useEffectUpdate } from "../../customHooks/useEffectUpdate";
-import { updateBoard } from "../../store/actions/board.actions";
-import { setDynamicModalData, showErrorMsg } from "../../store/actions/system.actions";
+import { BoardIcon } from "../../services/svg.service"
+import { Star } from "../Board/Star"
 
 export function WorkspaceBoardPreview({ board }) {
     const [boardToEdit, setBoardToEdit] = useState(board)
@@ -46,7 +48,7 @@ export function WorkspaceBoardPreview({ board }) {
 
                 <Star isStarred={boardToEdit.isStarred} onStarClick={onStarClick} />
             </section>
-            <p>work management &gt; Main workspace  </p>
+            <p>work management &gt Main workspace  </p>
         </article>
     )
 }   

@@ -2,7 +2,6 @@ import { useRef, useState } from "react"
 import { BigPlusIcon, CloseIcon } from "../../services/svg.service"
 import { uploadService } from '../../services/upload.service'
 
-
 export function PanelFile({ files, onAddFile }) {
     const [selectedImage, setSelectedImage] = useState(null)
     const fileInputRef = useRef(null)

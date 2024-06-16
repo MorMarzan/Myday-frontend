@@ -5,16 +5,16 @@ import { utilService } from "../../services/util.service"
 
 import { DynamicInput } from "../DynamicInput"
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate"
-import { PlusIcon, FilterIcon } from "../../services/svg.service"
-import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal, setDynamicModal } from "../../store/actions/system.actions"
+import { PlusIcon } from "../../services/svg.service"
+import { onTooltipParentEnter, onTooltipParentLeave } from "../../store/actions/system.actions"
 
 export function SidebarFilter({ filterBy, onSetFilter, onAddNewBoard }) {
-    onSetFilter = useRef(utilService.debounce(onSetFilter))
-    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
-
     const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
     const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
-    const isModalOpen = parentId === `add-board-tooltip`
+
+    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+    onSetFilter = useRef(utilService.debounce(onSetFilter))
+
     const titleRef = useRef(null)
 
     useEffectUpdate(() => {

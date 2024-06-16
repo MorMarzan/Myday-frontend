@@ -1,14 +1,17 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
-import { setSortBy } from "../../store/actions/board.actions"
 import { useEffectUpdate } from "../../customHooks/useEffectUpdate"
-import { CustomSelect } from "../CustomSelect"
-import { SortDownIcon, SortUpIcon } from "../../services/svg.service"
+
 import { boardService } from "../../services/board.service"
+import { setSortBy } from "../../store/actions/board.actions"
+
+import { SortDownIcon, SortUpIcon } from "../../services/svg.service"
+import { CustomSelect } from "../CustomSelect"
 
 export function SortPicker({ isIntialSortEmpty }) {
     const isMobile = useSelector((storeState) => storeState.systemModule.isMobile)
     const sortBy = useSelector((storeState) => storeState.boardModule.sortBy)
+
     const [sortByToEdit, setSortByToEdit] = useState(sortBy)
     const [isSortOn, setIsSortOn] = useState(!isIntialSortEmpty)
 
@@ -70,7 +73,6 @@ export function SortPicker({ isIntialSortEmpty }) {
 
     return (
         <section className="sort-picker general-modal">
-
             <h4 className="title">Sort by</h4>
 
             {

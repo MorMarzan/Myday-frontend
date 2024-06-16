@@ -1,0 +1,13 @@
+.favorite-display {
+    font-family: figtree-bold;
+    padding-inline: 8px;
+
+    svg {
+        fill: #ffcb00;
+    }
+
+    span {
+        margin-inline-start: 7px;
+        font-size: rem(16px);
+    }
+}

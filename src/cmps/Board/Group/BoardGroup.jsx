@@ -9,29 +9,26 @@ import { onTooltipParentEnter, onTooltipParentLeave, resetDynamicModal, setDynam
 import { EditableTxt } from "../../EditableTxt"
 import { TaskTable } from "./Task/TaskTable"
 import { TaskHeaderList } from "./Task/TaskHeaderList"
-import { utilService } from "../../../services/util.service"
+import { HighlightText } from "../../HighlightText"
 
 export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeave, isGroupsCollapsed, toggleIsGroupsCollapsed, isHeaderCollapsed, isMobile }) {
-    const menuBtnRef = useRef(null)
-    const collapseBtnRef = useRef(null)
-    const colorBtnParentRef = useRef(null)
-
     const board = useSelector((storeState) => storeState.boardModule.filteredBoard)
-
-    const filterBy = useSelector(storeState => storeState.boardModule.filterBy)
+    const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
     const { parentId, type, isOpen } = useSelector((storeState) => storeState.systemModule.dynamicModal)
-
 
     const [isEditing, setIsEditing] = useState(isEditingTitle)
     const [groupTitle, setGroupTitle] = useState(group.title)
     const [groupColor, setGroupColor] = useState(group.color)
     const [isGroupCollapsed, setIsGroupCollapsed] = useState(false)
 
+    const menuBtnRef = useRef(null)
+    const collapseBtnRef = useRef(null)
+    const colorBtnParentRef = useRef(null)
+
     const isMenuOpen = parentId === `${group.id}-menu`
     const isColorPickerOpen = parentId === `${group.id}-colorPicker`
     const isMobileMenu = parentId === `${group.id}-mobile-menu`
     const colors = getBoardColors()
-
 
     useEffect(() => {
         setGroupTitle(group.title)
@@ -90,9 +87,7 @@ export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeav
 
     async function onChangeColor(color) {
         try {
-
             setGroupColor(color)
-            // onGroupChange('color', color)
 
             let titleToSave = groupTitle
             if (!groupTitle) {
@@ -111,7 +106,6 @@ export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeav
 
             const updatedGroup = { ...group, 'color': color, 'title': titleToSave }
             updateGroup(board._id, updatedGroup, prevState, newState)
-            // onGroupChange('title', titleToSave)
             resetDynamicModal()
             setIsEditing(false)
         } catch (err) {
@@ -141,19 +135,7 @@ export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeav
         }
     }
 
-    function highlightText(text, query) {
-        if (!query) return text
-        const escapedQuery = utilService.escapeRegExp(query)
-
-        const parts = text.split(new RegExp(`(${escapedQuery})`, 'gi'))
-        return parts.map((part, index) =>
-            part.toLowerCase() === query.toLowerCase()
-                ? <span key={index} className="highlight">{part}</span>
-                : part
-        )
-    }
-
-    function toggleMenu(ev) {
+    function toggleMenu() {
         if (isMenuOpen) {
             resetDynamicModal()
         } else {
@@ -257,7 +239,6 @@ export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeav
         }
     ]
 
-
     return (
         <section className={`${(isGroupCollapsed || isGroupsCollapsed) && 'collapsed'} board-group`}>
             <div className={`full-width subgrid full-grid-column ${isHeaderCollapsed && "board-header-collapsed"} group-sticky-container sticky-left`}>
@@ -281,7 +262,6 @@ export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeav
 
                                 <button
                                     onClick={toggleCollapsed}
-                                    // title="Collapse group"
                                     style={{ fill: groupColor }}
                                     className="arrow-container flex svg-inherit-color"
                                     ref={collapseBtnRef}
@@ -298,7 +278,7 @@ export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeav
                                 >
                                     <EditableTxt
                                         isEditing={isEditing}
-                                        txtValue={highlightText(groupTitle, filterBy.txt)}
+                                        txtValue={<HighlightText text={groupTitle} query={filterBy.txt} />}
                                         onTxtClick={onTitleClick}
                                         inputValue={groupTitle}
                                         onInputChange={onChangeTitle}
@@ -310,7 +290,6 @@ export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeav
                                 </div>
                             </div>
 
-
                             <p className="tasks-count">{group.tasks.length} Tasks</p>
                         </div>
                     </div>
@@ -318,7 +297,7 @@ export function BoardGroup({ group, titlesOrder, isEditingTitle, onTitleEditLeav
                 <TaskHeaderList groupColor={groupColor} titlesOrder={titlesOrder} />
             </div>
 
-            <TaskTable titlesOrder={titlesOrder} groupColor={groupColor} highlightText={highlightText} filterBy={filterBy} group={group} board={board} />
+            <TaskTable titlesOrder={titlesOrder} groupColor={groupColor} filterBy={filterBy} group={group} board={board} />
 
         </section >
     )

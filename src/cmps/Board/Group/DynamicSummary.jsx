@@ -1,5 +1,4 @@
 import { FileSummary } from "./Summary/FileSummary"
-import { GroupSummary } from "./Summary/GroupSummary"
 import { LabelSummary } from "./Summary/LabelSummary"
 import { Timeline } from "./Summary/Timeline"
 

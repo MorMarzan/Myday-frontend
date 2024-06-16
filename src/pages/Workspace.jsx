@@ -1,14 +1,17 @@
-import { useState } from 'react'
-import { WorkspaceAside } from '../cmps/Workspace/WorkspaceAside'
-import { AngleDownIcon } from '../services/svg.service'
-import { userService } from '../services/user.service'
-import { utilService } from '../services/util.service'
-import { WorkspaceBoardsList } from '../cmps/Workspace/WorkspaceBoardsList'
-import workspaceHeaderConfetti from '/img/workspaceHeaderConfetti.svg'
-import { useSelector } from 'react-redux'
+import { useState } from "react"
+import { useSelector } from "react-redux"
+
+import { userService } from "../services/user.service"
+import { utilService } from "../services/util.service"
+import { AngleDownIcon } from "../services/svg.service"
+
+import workspaceHeaderConfetti from "/img/workspaceHeaderConfetti.svg"
+import { WorkspaceBoardsList } from "../cmps/Workspace/WorkspaceBoardsList"
+// import { WorkspaceAside } from "../cmps/Workspace/WorkspaceAside"
+
 export function Workspace() {
-    const [isBoardListShown, setIsBoardListShown] = useState(true)
     const boards = useSelector((storeState) => storeState.boardModule.boards)
+    const [isBoardListShown, setIsBoardListShown] = useState(true)
     const loggedInUser = userService.getLoggedinUser()
 
     return (

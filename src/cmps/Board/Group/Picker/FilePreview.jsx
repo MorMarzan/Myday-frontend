@@ -1,12 +1,14 @@
-import { useRef } from "react"
-import { resetDynamicModal, setDynamicModal } from "../../../../store/actions/system.actions"
 import { useSelector } from "react-redux"
+import { useRef } from "react"
+
 import { CloseIcon } from "../../../../services/svg.service"
 
+import { resetDynamicModal, setDynamicModal } from "../../../../store/actions/system.actions"
+
 export function FilePreview({ file, onUpdate, parentElementId, taskId }) {
+    const { parentId } = useSelector((storeState) => storeState.systemModule.dynamicModal)
     const previewBtnRef = useRef(null)
 
-    const { parentId } = useSelector((storeState) => storeState.systemModule.dynamicModal)
     const isCurrPickerOpen = parentId === `${parentElementId}-filePicker`
 
     function onFilePreviewClick() {

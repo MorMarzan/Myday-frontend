@@ -1,16 +1,17 @@
-import { useRef } from 'react'
-import { GithubIcon, LinkdinIcon, MailIcon } from '../services/svg.service'
-import AboutUsImg from '/img/AboutUsImg.png'
-import { useSelector } from 'react-redux'
-import { resetDynamicModal, setDynamicModal, showSuccessMsg } from '../store/actions/system.actions'
-import { UserImg } from './UserImg'
+import { useRef } from "react"
+import { useSelector } from "react-redux"
+import { resetDynamicModal, setDynamicModal, showSuccessMsg } from "../store/actions/system.actions"
+
+import { GithubIcon, LinkdinIcon, MailIcon } from "../services/svg.service"
+import AboutUsImg from "/img/AboutUsImg.png"
+import { UserImg } from "./UserImg"
 
 export function AboutUs() {
+    const { parentId } = useSelector((storeState) => storeState.systemModule.dynamicModal)
+
     const githubRef = useRef(null)
     const mailRef = useRef(null)
     const linkRef = useRef(null)
-
-    const { parentId } = useSelector((storeState) => storeState.systemModule.dynamicModal)
 
     const isGithubOpen = parentId === 'github-menu'
     const isEmailOpen = parentId === 'email-menu'

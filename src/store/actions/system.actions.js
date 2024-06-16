@@ -1,7 +1,6 @@
 import { SET_DYNAMIC_DIALOG, SET_DYNAMIC_MODAL, SET_DYNAMIC_MODAL_OPEN, SET_DYNAMIC_MODAL_PARENT_REF, SET_DYNAMIC_MODAL_TYPE, SET_DYNAMIC_MODAL_DATA, SET_DYNAMIC_MODAL_PARENT, SET_IS_LOADING, SET_DYNAMIC_PANEL_OPEN, SET_DYNAMIC_PANEL_TYPE, SET_DYNAMIC_PANEL_DATA, SET_SIDE_PANEL_OPEN, SET_IS_FULL_SIDEBAR_MOBILE, SET_IS_MOBILE } from '../reducers/system.reducer'
 import { SET_MSG } from '../reducers/system.reducer.js'
 import { store } from '../store'
-import { useSelector } from 'react-redux';
 
 // Loading
 export function setIsLoading(isLoading) {
@@ -54,7 +53,6 @@ export function resetDynamicModal() {
         type: SET_DYNAMIC_MODAL, dynamicModal: getEmptyDynamicModal()
     })
 }
-
 
 export function onTooltipParentEnter(isMobile, isOpen, type, txt, name, ref) {
     if (isMobile || (isOpen && type !== 'tooltip')) return
@@ -117,7 +115,6 @@ export function getEmptyDynamicDialog() {
 // PANEL
 
 export function setSidePanelOpen(isSidePanelOpen) {
-    // console.log('sidePanelIsOpen:', sidePanelIsOpen)
     store.dispatch({ type: SET_SIDE_PANEL_OPEN, isSidePanelOpen })
 }
 

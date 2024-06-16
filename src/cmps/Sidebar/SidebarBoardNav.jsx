@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { useSelector } from "react-redux"
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 
-import { SidebarBoardLink } from './SidebarBoardLink'
-
-import { showErrorMsg } from '../../store/actions/system.actions'
-import { saveNewBoards } from '../../store/actions/board.actions'
 import { boardService } from "../../services/board.service"
-import { utilService } from '../../services/util.service'
+import { utilService } from "../../services/util.service"
 
+import { showErrorMsg } from "../../store/actions/system.actions"
+import { saveNewBoards } from "../../store/actions/board.actions"
+
+import { SidebarBoardLink } from "./SidebarBoardLink"
 import emptySearch from "/img/search-empty.svg"
 
 export function SidebarBoardNav({ boards, currActiveBoard, removeBoard, updateBoard, filterBy }) {
@@ -22,26 +22,6 @@ export function SidebarBoardNav({ boards, currActiveBoard, removeBoard, updateBo
 
         saveNewOrder(newOrderedBoards)
     }
-
-    // async function saveNewOrder(boards) {
-    //     try {
-    //         const orderedNewBoard = sortFullBoards(boards);
-    //         await saveNewBoards(orderedNewBoard);
-    //     } catch (err) {
-    //         console.error('Error loading Boards:', err);
-    //         showErrorMsg('Cannot save new Boards order');
-    //     }
-    // }
-
-    // function sortFullBoards(boards) {
-    //     // Create a copy of boards to avoid mutating the original
-    //     const boardsCopy = [...boards];
-
-    //     // Sort boards based on the order field
-    //     boardsCopy.sort((a, b) => a.order - b.order);
-
-    //     return boardsCopy;
-    // }
 
     async function saveNewOrder(boards) {
         try {
@@ -112,6 +92,7 @@ export function SidebarBoardNav({ boards, currActiveBoard, removeBoard, updateBo
                                             currActiveBoard={currActiveBoard}
                                             removeBoard={removeBoard}
                                             updateBoard={updateBoard}
+                                            filterBy={filterBy}
                                         />
                                     </div>
                                 )}

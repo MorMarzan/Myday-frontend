@@ -1,11 +1,11 @@
 import { useRef, useState } from "react"
 import { resetDynamicModal } from "../../../../../store/actions/system.actions"
 import { AttachIcon } from "../../../../../services/svg.service"
-import { uploadService } from "../../../../../services/upload.service";
+import { uploadService } from "../../../../../services/upload.service"
 
 export function FilePicker({ chosenFile, changeFile, taskId }) {
     const [newFile, setNewFile] = useState(chosenFile)
-    const fileInputRef = useRef(null);
+    const fileInputRef = useRef(null)
 
     async function onUploadFile(ev) {
         try {
@@ -23,7 +23,7 @@ export function FilePicker({ chosenFile, changeFile, taskId }) {
             icon: <AttachIcon />,
             title: 'From Computer',
             onOptionClick: () => {
-                fileInputRef.current.click();
+                fileInputRef.current.click()
             }
         },
     ]

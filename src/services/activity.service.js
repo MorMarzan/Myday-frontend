@@ -1,8 +1,4 @@
-
-import { store } from '../store/store.js'
-import { getDefaultBoard } from './boards.service.js'
 import { httpService } from './http.service.js'
-import { utilService } from './util.service.js'
 
 const BASE_URL = 'activity/'
 

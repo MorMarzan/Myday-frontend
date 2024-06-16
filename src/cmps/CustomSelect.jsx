@@ -1,8 +1,8 @@
 import { useRef, useState } from "react"
-import { AngleDownIcon, CloseIcon } from "../services/svg.service"
+import { AngleDownIcon } from "../services/svg.service"
 import { useOutsideClick } from "../customHooks/useOutsideClick"
 
-export function CustomSelect({ options, onSelect, name, selectedOptValue, openUp, resetFunc }) {
+export function CustomSelect({ options, onSelect, name, selectedOptValue, openUp }) {
     const intialSelection = options.find(option => option.value === selectedOptValue) || options[0]
     const [selectedOption, setSelectedOption] = useState(intialSelection)
     const [isOpen, setIsOpen] = useState(false)

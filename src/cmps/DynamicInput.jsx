@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from "react"
 import { CloseIcon, SearchIcon } from "../services/svg.service"
 
 export function DynamicInput({ inputProps }) {
-    const inputRef = useRef(null)
     const [isFocused, setIsFocused] = useState(false)
+    const inputRef = useRef(null)
 
     function onInputBlur() {
         setIsFocused(false)
@@ -55,7 +55,6 @@ export function DynamicInput({ inputProps }) {
                     <CloseIcon />
                 </div>
             }
-
 
             {additionalBtns && additionalBtns.length &&
                 additionalBtns.map((additionalBtn, index) => (

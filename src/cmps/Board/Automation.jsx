@@ -1,4 +1,4 @@
-import { ArrowRightColoredIcon } from "../../services/svg.service";
+import { ArrowRightColoredIcon } from "../../services/svg.service"
 
 export function Automation({ isDisabled, automation, handleSwitchChange }) {
     return (

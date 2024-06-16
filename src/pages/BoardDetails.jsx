@@ -1,39 +1,29 @@
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
+import { useEffectUpdate } from "../customHooks/useEffectUpdate"
+
 import { Outlet, useNavigate, useParams } from "react-router"
+
+import { addGroup, loadBoard, loadFilteredBoard, setFilterBy, setSortBy } from "../store/actions/board.actions"
+import { resetDynamicModal, setDynamicDialog } from "../store/actions/system.actions"
+
 import loader from "/img/board-loader.gif"
-
-import { addGroup, loadBoard, loadFilteredBoard, setFilterBy, getTask, setSortBy } from "../store/actions/board.actions"
-
 import { BoardHeader } from "../cmps/Board/BoardHeader"
-import { TaskDetails } from "./TaskDetails"
 import { GroupList } from "../cmps/Board/Group/GroupList"
 import { boardService } from "../services/board.service"
-import { useEffectUpdate } from "../customHooks/useEffectUpdate"
-import { activityService } from "../services/activity.service"
-import { ActivityLog } from "../cmps/Panel/ActivityLog"
-import { resetDynamicModal, setDynamicDialog } from "../store/actions/system.actions"
 import { BrowserWarningTxt } from "../cmps/BrowserWarningTxt"
 
 export function BoardDetails() {
-    const isIncompatibleBrowser = useSelector((storeState) => storeState.systemModule.isIncompatibleBrowser)
     const board = useSelector((storeState) => storeState.boardModule.filteredBoard)
     const filterBy = useSelector((storeState) => storeState.boardModule.filterBy)
     const sortBy = useSelector((storeState) => storeState.boardModule.sortBy)
     const isLoading = useSelector((storeState) => storeState.systemModule.isLoading)
-    const modalData = useSelector((storeState) => storeState.systemModule.dynamicModal)
+
     const [scrollTop, setScrollTop] = useState(0)
     const navigate = useNavigate()
-    // const user = useSelector((storeState) => storeState.userModule.loggedinUser)
 
     const [isFocusLastGroup, setIsFocusLastGroup] = useState(false)
     const { boardId } = useParams()
-
-    useEffect(() => {
-        if (isIncompatibleBrowser) {
-            incompatibleBrowserAlert()
-        }
-    }, [])
 
     useEffect(() => {
         setTimeout(() => {
@@ -42,13 +32,6 @@ export function BoardDetails() {
 
         setFilterBy(boardService.getDefaultFilter()) // restart filter on nav
         setSortBy(boardService.getDefaultSort()) // restart sort on nav
-        // TODO : Emit watch on the user + add a listener for when user changes
-        // socketService.emit(SOCKET_EMIT_BOARD_WATCH, boardId)
-        // socketService.on(SOCKET_EVENT_BOARD_UPDATED, (board) => {
-        //     setBoard(board)
-        // })
-
-        // return () => socketService.off(SOCKET_EVENT_BOARD_UPDATED)
     }, [boardId])
 
     useEffectUpdate(() => {
@@ -72,7 +55,7 @@ export function BoardDetails() {
         }
     }
 
-    async function onAddGrop() {
+    async function onAddGroup() {
         try {
             await addGroup(board._id)
             setIsFocusLastGroup(true)
@@ -110,18 +93,10 @@ export function BoardDetails() {
                 board={board}
                 isFocusLastGroup={isFocusLastGroup}
                 onSetIsFocusLastGroup={() => setIsFocusLastGroup(false)}
-                onAddGrop={onAddGrop}
+                onAddGroup={onAddGroup}
             />
 
-            <Outlet
-                routes={{
-                    'task/:taskId': { element: <TaskDetails /> },
-                    'activity_log': { element: <ActivityLog /> },
-                }}
-            />
-            {/* the outlet is to display the nested route- task details */}
-            {/* Pass different props to each component using the routes object */}
-
+            <Outlet />
         </section>
     )
 }
